@@ -1,1 +1,1 @@
-# mathematicalModels2024II
+# Mathematical Models 2024-II
