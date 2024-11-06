@@ -40,6 +40,44 @@ html"""
 	alt="Pluto (dwarf planet)">
 """
 
+# ╔═╡ 2187dca1-e998-4d0e-a564-965087eb9eaf
+md"
+## Produccion y composicion de los lapices
+
+Los lápices se fabrican a partir de una mezcla de grafito, algún tipo de arcilla y cera. La cantidad de cada uno de los materiales define la 'dureza' del trazo del lápiz, correspondiendo una mayor cantidad de grafito a un trazo más oscuro. A continuación se muestran las cantidades de los materiales empleados para la fabricación de ciertos tipos de lápices.
+
+| Tipo de lápiz | Grafito | Arcilla | Cera |
+|----------------|---------|---------|------|
+| 9H             | 41%     | 53%     | 5%   |
+| 8H             | 44%     | 50%     | 5%   |
+| 7H             | 47%     | 47%     | 5%   |
+| 6H             | 50%     | 45%     | 5%   |
+| 5H             | 52%     | 42%     | 5%   |
+| 4H             | 55%     | 39%     | 5%   |
+| 3H             | 58%     | 36%     | 5%   |
+| 2H             | 60%     | 34%     | 5%   |
+| H              | 63%     | 31%     | 5%   |
+| F              | 66%     | 28%     | 5%   |
+| HB             | 68%     | 26%     | 5%   |
+| B              | 71%     | 23%     | 5%   |
+| 2B             | 74%     | 20%     | 5%   |
+| 3B             | 76%     | 18%     | 5%   |
+| 4B             | 79%     | 15%     | 5%   |
+| 5B             | 82%     | 12%     | 5%   |
+| 6B             | 84%     | 10%     | 5%   |
+| 7B             | 87%     | 7%      | 5%   |
+
+## Mercado de los lapices en Colombia y el mundo
+
+A pesar del avance de los aparatos electrónicos como tabletas, lectoras de libros o computadoras, el mercado de los lápices e implementos relacionados no ha decaído. Al contrario, ha mantenido un crecimiento estable y se espera que continúe de esta manera en la siguiente década, alcanzando un valor de mercado de alrededor de 28.000 millones de dólares para 2032[1]. En unidades, se estima que se fabrican alrededor de 14.000 millones de lápices al año.
+
+En Colombia, para el año 2019, el mercado de lápices de grafito alcanzaba un valor de 8.5 millones de dólares, lo que representaría unas 120 millones de unidades[2].
+
+[1]: Drawing Pencil Market Size, Share, Growth, Trends, Global Industry Analysis, By Type (Graphite Pencil & Colored Pencil), By Application (Commercial Use, School & Others), Regional Forecast From 2024 To 2032. (2024, Septiembre 21). Business Research Insights. Visitado en Noviembre 5, 2024, en https://www.businessresearchinsights.com/market-reports/drawing-pencil-market-100922
+
+[2]: Portafolio, R. (2019, Julio 22). ‘Vendemos más de 10 millones de lápices al año en Colombia.’ Portafolio.co. https://www.portafolio.co/negocios/empresas/vendemos-mas-de-10-millones-de-lapices-al-ano-en-colombia-531782
+"
+
 # ╔═╡ 86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 md"
 # Desarrollo y ajuste del modelo
@@ -1227,10 +1265,11 @@ version = "1.4.1+1"
 # ╟─421fe5f0-9af0-11ef-3608-6fecdfb91030
 # ╟─b0a34497-b82b-45ca-824d-277127c87feb
 # ╟─d6c81059-612c-484e-80b7-e87da96621e7
-# ╟─5b2aa089-69d1-43a2-ac33-11a0f1a3833b
+# ╠═5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 # ╟─5d97058d-681d-4102-934f-68aad54dcae5
 # ╠═79011430-9d34-4cd2-aa74-7fb17b7376d2
 # ╟─7422ad93-5251-47ba-86ca-cce5a5b69a7f
+# ╠═2187dca1-e998-4d0e-a564-965087eb9eaf
 # ╟─86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
