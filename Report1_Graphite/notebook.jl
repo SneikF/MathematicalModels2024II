@@ -96,7 +96,7 @@ md"
 md"
 ## Proposed solutions
 
-Now that the reach, overall waste, and impact derived from the usage of graphite in our pencils were pointed out, the focus is set on what can be done to alleviate the problem. Two classes of solutions are proposed: those focused on stopping the consumption of pencils all together and those focused on maximizing the usage of them.
+Now that the reach, overall waste, and impact derived from the usage of graphite in our pencils were pointed out, the focus is set on what can be done to alleviate the problem. Two classes of solutions are proposed: those focused on stopping the consumption of pencils all together and those focused on reducing the waste when using them.
 
 
 To begin with, we present alternatives to the wood-cased pencil, which reduces the graphite waste. Adopting mechanical pencils, especially those with thin leads, removes the need to sharpen the tip, which was one of the sources of waste considered in our model. This alternative could work for people concerned about the forestal resources directed to producing pencils and people who prefer a writing tool with a more consistent balance and line width. Another choice are digital tools. Nowadays, technology enables this option for anyone willing to pay, from artists to students.
