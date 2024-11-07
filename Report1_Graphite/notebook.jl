@@ -48,6 +48,28 @@ We
 ## The mathematical model
 
 "
+
+# ╔═╡ 3927fd97-d981-4c48-b6b5-eda6592a68e9
+md"""Our goal is to estimate what percentage of graphite is wasted through the lifetime of a wood-cased pencil, using simple tools like a ruler and a traditional pencil sharpener. 
+
+We make the following assumptions:
+
+- The amount of graphite lost between sharpenings is the same, and this amount is the same as the one lost before the first sharpening.
+- The pencil is sharpened at regular distances.
+- Once the pencil reaches a certain length, it becomes unusable, and what is left is wasted.
+
+We can roughly divide our pencil into two sections: the part that is used and the leftover. The used part can be further divided into what we will call segments, using as separators the points at which the pencil is sharpened, as shown in figure _. 
+
+Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, but we know that its volume is proportional to its length, so when taking a percentage, we can work with just the length. Taking this into consideration, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. Calling $m$ the length of the leftover part, the used part has length $l-m$ and a percentage $\alpha$ of it will be used, while $1-\alpha$  parts of it will be wasted. Then we model the amount of wasted length as $(l-m)(1-\alpha) + m$ and we divide by $l$ to get the percentage of wasted graphite $P$:
+
+$$\begin{align*}
+P &= \dfrac{(l-m)(1-\alpha) + m}{l}\\
+&=  \dfrac{l-l\alpha-m+m\alpha + m}{l}\\
+&=  1-\alpha + \dfrac{m\alpha}{l}\\
+&= 1-\alpha\left(1- \dfrac{m}{l}\right)
+\end{align*}$$
+"""
+
 # ╔═╡ 17148ec3-5c19-40de-babc-2bf29adf5782
 html"""
 <p>How a pencil is made [3]:</p>
