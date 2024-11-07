@@ -21,24 +21,36 @@ PlutoUI.TableOfContents(title="Reporte 1 - Desperdicio de Grafito", aside=true)
 
 # ╔═╡ 5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 md"""
-# Contexto del problema 
+# Background information
 """
 
 # ╔═╡ 5d97058d-681d-4102-934f-68aad54dcae5
 md"""
-El grafito es un material que consiste en átomos de carbono acomodados en láminas planas, estos ensambles se asemejan a diseños hexagonales. En condiciones normales es carbono puro, el cual es conocido por ser bastante estable. Se puede encontrar en forma natural, pues puede provenir de procesos naturales de transformación de materia, o se puede fabricar de manera sintética. El grafito natural se extrae de rocas y se procesa de manera industrial, su extracción y procesamiento tiene consecuencias ambientales como la perdida de entornos, emiciones de carbono o contaminación del agua; se usa como materia prima de lubricantes, revestimientos refractarios, lapices, etc. El grafito sintético tiene un alto costo de producción, y en su mayoría se usa como parte del material de frabricación de baterias, celdas solares, etc.
+The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
 
-En la siguiente imagen se describe la elaboración de un lápiz común:
+The graphite is excellent for lubricants, greases, batteries, refractory materials or to make pencils leads, in this report we are interested in the pencils leads. The below image show us how a pencil is made.
 """
 
 # ╔═╡ 7422ad93-5251-47ba-86ca-cce5a5b69a7f
 html"""
-<p>Elaboración de un lápiz común (Tomado de: https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1):</p>
+<p>How a pencil is made [3]:</p>
 
 <img src="https://i.shgcdn.com/36ca2275-8ceb-4e3d-9c20-d6986b75d536/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
 	width="700"
-	alt="Pluto (dwarf planet)">
+	alt="(Image 1)">
 """
+
+# ╔═╡ fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
+md"
+# Development and adjustment of the mathematical model
+
+## Scenario Description
+We 
+
+
+## The mathematical model
+
+"
 
 # ╔═╡ 2187dca1-e998-4d0e-a564-965087eb9eaf
 md"
@@ -81,6 +93,18 @@ En Colombia, para el año 2019, el mercado de lápices de grafito alcanzaba un v
 # ╔═╡ 86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 md"
 # Desarrollo y ajuste del modelo
+"
+
+# ╔═╡ 3a66a494-5bdd-45aa-ae46-a6951a204b1f
+md"
+# References
+
+[1] Eastcarb. (2024, October 21). What is graphite? Eastcarb. https://www.eastcarb.com/what-is-graphite/#Applications_of_Graphite
+
+[2]   WIPO (2023). Graphite and its Applications. Geneva: World 
+Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.int/edocs/pubdocs/en/wipo-pub-1083-en-patent-landscape-report-graphite-and-its-applications.pdf 
+
+[3] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
 "
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1265,11 +1289,13 @@ version = "1.4.1+1"
 # ╟─421fe5f0-9af0-11ef-3608-6fecdfb91030
 # ╟─b0a34497-b82b-45ca-824d-277127c87feb
 # ╟─d6c81059-612c-484e-80b7-e87da96621e7
-# ╠═5b2aa089-69d1-43a2-ac33-11a0f1a3833b
+# ╟─5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 # ╟─5d97058d-681d-4102-934f-68aad54dcae5
-# ╠═79011430-9d34-4cd2-aa74-7fb17b7376d2
+# ╟─79011430-9d34-4cd2-aa74-7fb17b7376d2
 # ╟─7422ad93-5251-47ba-86ca-cce5a5b69a7f
+# ╟─fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
 # ╠═2187dca1-e998-4d0e-a564-965087eb9eaf
 # ╟─86709ed3-f1d4-46ca-a54e-72bdf9521cd1
+# ╟─3a66a494-5bdd-45aa-ae46-a6951a204b1f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
