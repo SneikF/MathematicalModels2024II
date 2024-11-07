@@ -22,10 +22,7 @@ PlutoUI.TableOfContents(title="Reporte 1 - Desperdicio de Grafito", aside=true)
 # ╔═╡ 5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 md"""
 # Background information
-"""
 
-# ╔═╡ 5d97058d-681d-4102-934f-68aad54dcae5
-md"""
 The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
 
 The graphite is excellent for lubricants, greases, batteries, refractory materials or to make pencils leads, in this report we are interested in the pencils leads. The below image show us how a pencil is made.
@@ -54,7 +51,7 @@ We
 
 # ╔═╡ 2187dca1-e998-4d0e-a564-965087eb9eaf
 md"
-## Produccion y composicion de los lapices
+# Produccion y composicion de los lapices
 
 Los lápices se fabrican a partir de una mezcla de grafito, algún tipo de arcilla y cera. La cantidad de cada uno de los materiales define la 'dureza' del trazo del lápiz, correspondiendo una mayor cantidad de grafito a un trazo más oscuro. A continuación se muestran las cantidades de los materiales empleados para la fabricación de ciertos tipos de lápices.
 
@@ -79,7 +76,7 @@ Los lápices se fabrican a partir de una mezcla de grafito, algún tipo de arcil
 | 6B             | 84%     | 10%     | 5%   |
 | 7B             | 87%     | 7%      | 5%   |
 
-## Mercado de los lapices en Colombia y el mundo
+# Mercado de los lapices en Colombia y el mundo
 
 A pesar del avance de los aparatos electrónicos como tabletas, lectoras de libros o computadoras, el mercado de los lápices e implementos relacionados no ha decaído. Al contrario, ha mantenido un crecimiento estable y se espera que continúe de esta manera en la siguiente década, alcanzando un valor de mercado de alrededor de 28.000 millones de dólares para 2032[1]. En unidades, se estima que se fabrican alrededor de 14.000 millones de lápices al año.
 
@@ -1290,7 +1287,6 @@ version = "1.4.1+1"
 # ╟─b0a34497-b82b-45ca-824d-277127c87feb
 # ╟─d6c81059-612c-484e-80b7-e87da96621e7
 # ╟─5b2aa089-69d1-43a2-ac33-11a0f1a3833b
-# ╟─5d97058d-681d-4102-934f-68aad54dcae5
 # ╟─79011430-9d34-4cd2-aa74-7fb17b7376d2
 # ╟─7422ad93-5251-47ba-86ca-cce5a5b69a7f
 # ╟─fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
