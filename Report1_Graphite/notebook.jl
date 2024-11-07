@@ -48,6 +48,23 @@ We
 ## The mathematical model
 
 "
+# ╔═╡ 17148ec3-5c19-40de-babc-2bf29adf5782
+html"""
+<p>How a pencil is made [3]:</p>
+
+<img src="https://i.postimg.cc/tg3mB3mX/Common-Pencil.png"
+	width="700"
+	alt="(Image 1)">
+"""
+# ╔═╡ 0ab91597-6cf9-4190-8351-30b653695558
+html"""
+<p>How a pencil is made [3]:</p>
+
+<img src="https://i.postimg.cc/zv5QNk0f/Pencil-Tip.png"
+	width="700"
+	alt="(Image 1)">
+"""
+
 
 # ╔═╡ 2187dca1-e998-4d0e-a564-965087eb9eaf
 md"
