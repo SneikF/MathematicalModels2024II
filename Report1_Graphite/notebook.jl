@@ -131,12 +131,8 @@ $\scriptsize{\texttt{Figure 4. A common Tip pencil}}$
 Therefore, with this data and the above model, we estimate that the wasted percentage in a common pencil is:
 
 $$\begin{align*}
-P &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone})+V_{cone}\cdot(1-\alpha)\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
- &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone} \cdot \alpha\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
- &= \dfrac{\dfrac{(l-m)}{s}\bigg(\dfrac{2}{3} \pi r^2 s + \dfrac{1}{3} \pi r^2 s \cdot \alpha \bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
- &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) \pi r^2 + \pi r^2 \cdot m}{\pi r^2 \cdot l} \\
- &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) + m}{l} \\
- &= \dfrac{(l-m)(2 + \alpha ) + 3m}{3l}
+P &= \dfrac{(l-m)(2 + \alpha ) + 3m}{3l} \\
+  &=  0
 \end{align*}$$
 
 "
