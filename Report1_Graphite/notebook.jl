@@ -17,11 +17,11 @@ using PlutoUI
   ╠═╡ =#
 
 # ╔═╡ b0a34497-b82b-45ca-824d-277127c87feb
-PlutoUI.TableOfContents(title="Reporte 1 - Desperdicio de Grafito", aside=true)
+PlutoUI.TableOfContents(title="Report 1 - Graphite Waste", aside=true)
 
 # ╔═╡ 5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 md"""
-# Background information
+## Background information
 
 The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
 
@@ -39,9 +39,9 @@ html"""
 
 # ╔═╡ fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
 md"
-# Development and adjustment of the mathematical model
+## Development and adjustment of the mathematical model
 
-## Scenario Description
+### Scenario Description
 We 
 
 
@@ -50,7 +50,8 @@ We
 "
 
 # ╔═╡ 3927fd97-d981-4c48-b6b5-eda6592a68e9
-md"""Our goal is to estimate what percentage of graphite is wasted through the lifetime of a wood-cased pencil, using simple tools like a ruler and a traditional pencil sharpener. 
+md"""
+Our goal is to estimate what percentage of graphite is wasted through the lifetime of a wood-cased pencil, using simple tools like a ruler and a traditional pencil sharpener. 
 
 We make the following assumptions:
 
@@ -90,11 +91,11 @@ html"""
 
 # ╔═╡ 2187dca1-e998-4d0e-a564-965087eb9eaf
 md"
-# Produccion y composicion de los lapices
+## Production and Composition of Pencils
 
-Los lápices se fabrican a partir de una mezcla de grafito, algún tipo de arcilla y cera. La cantidad de cada uno de los materiales define la 'dureza' del trazo del lápiz, correspondiendo una mayor cantidad de grafito a un trazo más oscuro. A continuación se muestran las cantidades de los materiales empleados para la fabricación de ciertos tipos de lápices.
+Pencils are made from a mixture of graphite, some type of clay, and wax. The amount of each material determines the "hardness" of the pencil's mark, with a higher amount of graphite resulting in a darker line. Below are the quantities of materials used to manufacture certain types of pencils.
 
-| Tipo de lápiz | Grafito | Arcilla | Cera |
+| Type of Pencil | Graphite | Clay | Wax |
 |----------------|---------|---------|------|
 | 9H             | 41%     | 53%     | 5%   |
 | 8H             | 44%     | 50%     | 5%   |
@@ -115,11 +116,11 @@ Los lápices se fabrican a partir de una mezcla de grafito, algún tipo de arcil
 | 6B             | 84%     | 10%     | 5%   |
 | 7B             | 87%     | 7%      | 5%   |
 
-# Mercado de los lapices en Colombia y el mundo
+## Pencil Market in Colombia and the World
 
-A pesar del avance de los aparatos electrónicos como tabletas, lectoras de libros o computadoras, el mercado de los lápices e implementos relacionados no ha decaído. Al contrario, ha mantenido un crecimiento estable y se espera que continúe de esta manera en la siguiente década, alcanzando un valor de mercado de alrededor de 28.000 millones de dólares para 2032[1]. En unidades, se estima que se fabrican alrededor de 14.000 millones de lápices al año.
+Despite the rise of electronic devices such as tablets, e-readers, and computers, the market for pencils and related products has not declined. On the contrary, it has shown steady growth and is expected to continue this way over the next decade, reaching a market value of around 28 billion dollars by 2032[1]. In terms of units, it is estimated that about 14 billion pencils are produced annually.
 
-En Colombia, para el año 2019, el mercado de lápices de grafito alcanzaba un valor de 8.5 millones de dólares, lo que representaría unas 120 millones de unidades[2].
+In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[2].
 
 [1]: Drawing Pencil Market Size, Share, Growth, Trends, Global Industry Analysis, By Type (Graphite Pencil & Colored Pencil), By Application (Commercial Use, School & Others), Regional Forecast From 2024 To 2032. (2024, Septiembre 21). Business Research Insights. Visitado en Noviembre 5, 2024, en https://www.businessresearchinsights.com/market-reports/drawing-pencil-market-100922
 
@@ -128,7 +129,7 @@ En Colombia, para el año 2019, el mercado de lápices de grafito alcanzaba un v
 
 # ╔═╡ 86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 md"
-# Desarrollo y ajuste del modelo
+## Development and adjustment of the model
 "
 
 # ╔═╡ 60fd0347-50fe-42f7-9ccd-7ab2536dd591
@@ -147,7 +148,7 @@ When a complete halting is ruled out, there are behaviors that, depending on the
 
 # ╔═╡ 3a66a494-5bdd-45aa-ae46-a6951a204b1f
 md"
-# References
+## References
 
 [1] Eastcarb. (2024, October 21). What is graphite? Eastcarb. https://www.eastcarb.com/what-is-graphite/#Applications_of_Graphite
 
