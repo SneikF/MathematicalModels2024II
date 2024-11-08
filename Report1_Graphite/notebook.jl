@@ -81,14 +81,24 @@ $\scriptsize{\texttt{Figure 2. Division of the pencil. The dashed lines indicate
 
 Model 1
 
-Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, but we know that its volume is proportional to its length, so when taking a percentage, we can work with just the length. then, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. Calling $m$ the length of the leftover part, the used part has length $l-m$ and a percentage $\alpha$ of it will be used, while $1-\alpha$  parts of it will be wasted. Then we model the amount of wasted length as $(l-m)(1-\alpha) + m$ and we divide by $l$ to get the percentage of wasted graphite $P$:
+Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, but we know that its volume is proportional to its length, so when taking a percentage, we can work with just the length. then, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. Calling $m$ the length of the leftover part, the used part has length $l-m$ and a percentage $\alpha$ of it will be used, while $1-\alpha$  parts of it will be wasted. Then we model the amount of wasted length as $(l-m)(1-\alpha) + m$ and we divide by $l$ to get the percentage of wasted graphite $P$ in terms of the three parameters described:
 
 $$\begin{align*}
-P &= \dfrac{(l-m)(1-\alpha) + m}{l}\\
+P(l,m,\alpha) &= \dfrac{(l-m)(1-\alpha) + m}{l}\\
 &=  \dfrac{l-l\alpha-m+m\alpha + m}{l}\\
 &=  1-\alpha + \dfrac{m\alpha}{l}\\
 &= 1-\alpha\left(1- \dfrac{m}{l}\right)
 \end{align*}$$
+
+We set our parameters to some educated guesses. According to the website, Unsharpen [6], many brands measure just above $17.5$ cm in length. We did the experiment with some local brands (Figure X) and got similar results, we let $l=17$ cm. We take $m = 6.4$ cm, a rough estimate of the length of a pencil lead when the pencil stops resting comfortably in the curve between the thumb and the index finger for an average sized male hand [7] (accounting for the clamp but not the eraser, i.e., the length at which the clamp would stop resting against the hand). Finally, we take $\alpha=0.32$. 
+
+Depending on the context, $\alpha$ gives great expressibility to the model. For example, for a scenario where we only use a faulty pencil sharpener that always breaks the tip of the pencil once before finishing the job, we would pick a value of $\alpha$ less than $0.5$. To construct $\alpha$ we looked at the measurements of a common pencil lead and worked out a general scenario where the pencil is sharpened whenever the tip is completely flat. After sharpening, the tip is left cone-shaped. This cone makes up for $\dfrac{1}{3}$ of what was previously a cylinder, and from this conical tip, we assume most of the lead of an HB pencil will stay on paper when in usage, thus we let the percentage of used graphite between sharpening be: $\alpha = 0.96\dfrac{1}{3}$. One could guess a greater percentage of the tip is lost while writing for softer pencils like those graded B6 and B8. We estimate the percentage of graphite wasted throught the lifetime of a pencil to be the around $80$%:
+
+$P(17, 6.4, 0.32) = 1-0.32\left(1- \dfrac{6.4}{17}\right) \approx 0.8$
+
+In contrast, if the pencil is sharpen until it resembles a cone, then $m=0.5$ cm, and we calculate $69$ percent of the lead is wasted:
+
+$P(17, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17}\right) \approx 0.69$
 
 Model 2
 
@@ -175,6 +185,10 @@ Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.i
 [4] Portafolio, R. (2019, July 22). ‘Vendemos más de 10 millones de lápices al año en Colombia.’ Portafolio.co. https://www.portafolio.co/negocios/empresas/vendemos-mas-de-10-millones-de-lapices-al-ano-en-colombia-531782
 
 [5] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
+
+[6] Unsharpen Team. (2022, December 23). How long is a pencil?. Unsharpen. https://unsharpen.com/how-long-is-a-pencil//
+
+[7] Wikimedia Foundation. (2024, September 19). Mano. Wikipedia. https://es.wikipedia.org/wiki/Mano#Variaci%C3%B3n,_tama%C3%B1o_de_la_mano
 
 #### Searches in search engines
 - Statistics of pencil market
