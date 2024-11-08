@@ -7,15 +7,6 @@ using InteractiveUtils
 # ╔═╡ d6c81059-612c-484e-80b7-e87da96621e7
 using Plots, LaTeXStrings
 
-# ╔═╡ 79011430-9d34-4cd2-aa74-7fb17b7376d2
-using PlutoUI
-
-# ╔═╡ 421fe5f0-9af0-11ef-3608-6fecdfb91030
-# ╠═╡ disabled = true
-#=╠═╡
-using PlutoUI
-  ╠═╡ =#
-
 # ╔═╡ b0a34497-b82b-45ca-824d-277127c87feb
 PlutoUI.TableOfContents(title="Report 1 - Graphite Waste", aside=true)
 
@@ -26,6 +17,12 @@ md"""
 The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
 
 The graphite is excellent for lubricants, greases, batteries, refractory materials or to make pencils leads, in this report we are interested in the pencils leads. The below image show us how a pencil is made.
+
+
+![How_a_pencil_is_made](https://i.shgcdn.com/36ca2275-8ceb-4e3d-9c20-d6986b75d536/-/format/auto/-/preview/3000x3000/-/quality/lighter/)
+
+$\scriptsize{\texttt{Figure 1. How a pencil is made. [5]}}$
+
 
 ### Production and composition of pencils
 
@@ -59,34 +56,14 @@ Despite the rise of electronic devices such as tablets, e-readers, and computers
 In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[4].
 """
 
-# ╔═╡ 7422ad93-5251-47ba-86ca-cce5a5b69a7f
-html"""
-<p>How a pencil is made [5]:</p>
-
-<img src="https://i.shgcdn.com/36ca2275-8ceb-4e3d-9c20-d6986b75d536/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
-	width="700"
-	alt="(Image 1)">
-"""
-
-# ╔═╡ fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
-md"
-## Development and adjustment of the mathematical model
-
-### Scenario Description
-We 
-
-
-## The mathematical model
-
-"
-
 # ╔═╡ 86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 md"
-## Development and adjustment of the model
+# Development and adjustment of the model
 "
 
 # ╔═╡ 3927fd97-d981-4c48-b6b5-eda6592a68e9
 md"""
+## The mathematical model
 Our goal is to estimate what percentage of graphite is wasted through the lifetime of a wood-cased pencil, knowing its shape and dimensions.
 
 We make the following assumptions:
@@ -99,7 +76,10 @@ We can roughly divide our pencil into two sections: the part that is used and th
 
 ![pencil_division](https://i.postimg.cc/021xLC3p/pencil-division.png)
 
-$\scriptsize{\texttt{Figure X. Division of the pencil. The dashed lines indicate the position of the tip after sharpening.}}$
+$\scriptsize{\texttt{Figure 2. Division of the pencil. The dashed lines indicate the position of the tip after sharpening.}}$
+
+
+Model 1
 
 Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, but we know that its volume is proportional to its length, so when taking a percentage, we can work with just the length. then, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. Calling $m$ the length of the leftover part, the used part has length $l-m$ and a percentage $\alpha$ of it will be used, while $1-\alpha$  parts of it will be wasted. Then we model the amount of wasted length as $(l-m)(1-\alpha) + m$ and we divide by $l$ to get the percentage of wasted graphite $P$:
 
@@ -109,39 +89,71 @@ P &= \dfrac{(l-m)(1-\alpha) + m}{l}\\
 &=  1-\alpha + \dfrac{m\alpha}{l}\\
 &= 1-\alpha\left(1- \dfrac{m}{l}\right)
 \end{align*}$$
+
+Model 2
+
+We will consider the assumptions stated above. Let $l$ represent the length of the pencil, and for simplicity, treat the pencil as a line segment of length $l$ units. Let $m$ be the length of the leftover part, so the used portion has length $(l-m)$. A percentage $\alpha$ of this used portion will be consumed, while the remaining $1 - \alpha$ will be wasted.
+
+Additionally, when we sharpen the pencil, we waste the difference in volume between the cylinder and the cone at the tip, which is $V_{\text{cylinder}}-V_{\text{cone}}$.
+
+To model this, we assume that each pencil lead has length $s$, meaning a pencil contains $(l - m)/s$ leads.
+
+With these considerations, we propose the following model for to get the percentage of wasted graphite $P$:
+
+
+$$\begin{align*}
+P &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone})+V_{cone}\cdot(1-\alpha)\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
+ &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone} \cdot \alpha\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
+ &= \dfrac{\dfrac{(l-m)}{s}\bigg(\dfrac{2}{3} \pi r^2 s + \dfrac{1}{3} \pi r^2 s \cdot \alpha \bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
+ &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) \pi r^2 + \pi r^2 \cdot m}{\pi r^2 \cdot l} \\
+ &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) + m}{l} \\
+ &= \dfrac{(l-m)(2 + \alpha ) + 3m}{3l}
+\end{align*}$$
+
 """
 
-# ╔═╡ 0ab91597-6cf9-4190-8351-30b653695558
-html"""
-<p>How a pencil is made [5]:</p>
+# ╔═╡ c69caf3a-ab49-4e4d-8f4c-63f880d6ca6d
+md"
+## Model implementation
 
-<img src="https://i.postimg.cc/zv5QNk0f/Pencil-Tip.png"
-	width="700"
-	alt="(Image 1)">
-"""
+We consider a common pencil with the following sizes:
 
-# ╔═╡ 17148ec3-5c19-40de-babc-2bf29adf5782
-html"""
-<p>How a pencil is made [5]:</p>
+![pencil_division](https://i.postimg.cc/tg3mB3mX/Common-Pencil.png)
 
-<img src="https://i.postimg.cc/tg3mB3mX/Common-Pencil.png"
-	width="700"
-	alt="(Image 1)">
-"""
+$\scriptsize{\texttt{Figure 3. A common pencil}}$
+
+the length of a human hand is $175 mm$ on average, and we weill assume that the minimum size of the pencil that a person can hold or use effectively is  a pencil with $m = 65 mm$. On the other hand, a common pencil lead has $s=2 mm$ and, especially with heavy use, some estimates suggest that up to $1-\alpha = 20\%$ or more of the graphite pencil can be'wasted' during writing process. This 'wasted' material is not directly transferred onto the paper but is instead either worn off as fine dust or shavings, or left behind as unusable remnants.
+
+![pencil_division](https://i.postimg.cc/WpHptx5w/Pencil-Tip.png)
+
+$\scriptsize{\texttt{Figure 4. A common Tip pencil}}$
+
+Therefore, with this data and the above model, we estimate that the wasted percentage in a common pencil is:
+
+$$\begin{align*}
+P &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone})+V_{cone}\cdot(1-\alpha)\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
+ &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone} \cdot \alpha\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
+ &= \dfrac{\dfrac{(l-m)}{s}\bigg(\dfrac{2}{3} \pi r^2 s + \dfrac{1}{3} \pi r^2 s \cdot \alpha \bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
+ &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) \pi r^2 + \pi r^2 \cdot m}{\pi r^2 \cdot l} \\
+ &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) + m}{l} \\
+ &= \dfrac{(l-m)(2 + \alpha ) + 3m}{3l}
+\end{align*}$$
+
+"
 
 # ╔═╡ 1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
-md""""
-## Global estimates
+md"""
+# Global estimates
 """
 
 # ╔═╡ 09113d1e-da43-4507-bf7c-38a8a2f701d0
 md"""
-## Impact of graphite waste
+# Impact of graphite waste
 """
 
 # ╔═╡ 60fd0347-50fe-42f7-9ccd-7ab2536dd591
 md"
-## Proposed solutions
+# Proposed solutions
 
 Now that the reach, overall waste, and impact derived from the usage of graphite in our pencils were pointed out, the focus is set on what can be done to alleviate the problem. Two classes of solutions are proposed: those focused on stopping the consumption of pencils all together and those focused on reducing the waste when using them.
 
@@ -155,7 +167,7 @@ When a complete halting is ruled out, there are behaviors that, depending on the
 
 # ╔═╡ 3a66a494-5bdd-45aa-ae46-a6951a204b1f
 md"
-## References
+# References
 
 [1] Eastcarb. (2024, October 21). What is graphite? Eastcarb. https://www.eastcarb.com/what-is-graphite/#Applications_of_Graphite
 
@@ -168,10 +180,19 @@ Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.i
 
 [5] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
 
-### Searches in search engines
+#### Searches in search engines
 - Statistics of pencil market
 - Mercado de lapices en colombia
 "
+
+# ╔═╡ 79011430-9d34-4cd2-aa74-7fb17b7376d2
+using PlutoUI
+
+# ╔═╡ 421fe5f0-9af0-11ef-3608-6fecdfb91030
+# ╠═╡ disabled = true
+#=╠═╡
+using PlutoUI
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1355,17 +1376,14 @@ version = "1.4.1+1"
 # ╟─421fe5f0-9af0-11ef-3608-6fecdfb91030
 # ╟─b0a34497-b82b-45ca-824d-277127c87feb
 # ╟─d6c81059-612c-484e-80b7-e87da96621e7
-# ╠═5b2aa089-69d1-43a2-ac33-11a0f1a3833b
+# ╟─5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 # ╟─79011430-9d34-4cd2-aa74-7fb17b7376d2
-# ╠═7422ad93-5251-47ba-86ca-cce5a5b69a7f
-# ╠═fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
-# ╟─86709ed3-f1d4-46ca-a54e-72bdf9521cd1
-# ╠═0ab91597-6cf9-4190-8351-30b653695558
+# ╠═86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 # ╠═3927fd97-d981-4c48-b6b5-eda6592a68e9
-# ╠═17148ec3-5c19-40de-babc-2bf29adf5782
+# ╠═c69caf3a-ab49-4e4d-8f4c-63f880d6ca6d
 # ╠═1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
 # ╠═09113d1e-da43-4507-bf7c-38a8a2f701d0
-# ╠═60fd0347-50fe-42f7-9ccd-7ab2536dd591
-# ╠═3a66a494-5bdd-45aa-ae46-a6951a204b1f
+# ╟─60fd0347-50fe-42f7-9ccd-7ab2536dd591
+# ╟─3a66a494-5bdd-45aa-ae46-a6951a204b1f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
