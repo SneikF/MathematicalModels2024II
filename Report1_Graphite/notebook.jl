@@ -26,11 +26,8 @@ md"""
 The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
 
 The graphite is excellent for lubricants, greases, batteries, refractory materials or to make pencils leads, in this report we are interested in the pencils leads. The below image show us how a pencil is made.
-"""
 
-# ╔═╡ 2187dca1-e998-4d0e-a564-965087eb9eaf
-md"
-### Production and Composition of Pencils
+### Production and composition of pencils
 
 Pencils are made from a mixture of graphite, some type of clay, and wax. The amount of each material determines the 'hardness' of the pencil's mark, with a higher amount of graphite resulting in a darker line. Below are the quantities of materials used to manufacture certain types of pencils.
 
@@ -55,20 +52,16 @@ Pencils are made from a mixture of graphite, some type of clay, and wax. The amo
 | 6B             | 84%     | 10%     | 5%   |
 | 7B             | 87%     | 7%      | 5%   |
 
-### Pencil Market in Colombia and the World
+### Pencil market in Colombia and the world
 
-Despite the rise of electronic devices such as tablets, e-readers, and computers, the market for pencils and related products has not declined. On the contrary, it has shown steady growth and is expected to continue this way over the next decade, reaching a market value of around 28 billion dollars by 2032[1]. In terms of units, it is estimated that about 14 billion pencils are produced annually.
+Despite the rise of electronic devices such as tablets, e-readers, and computers, the market for pencils and related products has not declined. On the contrary, it has shown steady growth and is expected to continue this way over the next decade, reaching a market value of around 28 billion dollars by 2032[3]. In terms of units, it is estimated that about 14 billion pencils are produced annually.
 
-In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[2].
-
-[1]: Drawing Pencil Market Size, Share, Growth, Trends, Global Industry Analysis, By Type (Graphite Pencil & Colored Pencil), By Application (Commercial Use, School & Others), Regional Forecast From 2024 To 2032. (2024, Septiembre 21). Business Research Insights. Visitado en Noviembre 5, 2024, en https://www.businessresearchinsights.com/market-reports/drawing-pencil-market-100922
-
-[2]: Portafolio, R. (2019, Julio 22). ‘Vendemos más de 10 millones de lápices al año en Colombia.’ Portafolio.co. https://www.portafolio.co/negocios/empresas/vendemos-mas-de-10-millones-de-lapices-al-ano-en-colombia-531782
-"
+In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[4].
+"""
 
 # ╔═╡ 7422ad93-5251-47ba-86ca-cce5a5b69a7f
 html"""
-<p>How a pencil is made [3]:</p>
+<p>How a pencil is made [5]:</p>
 
 <img src="https://i.shgcdn.com/36ca2275-8ceb-4e3d-9c20-d6986b75d536/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
 	width="700"
@@ -94,7 +87,7 @@ md"
 
 # ╔═╡ 0ab91597-6cf9-4190-8351-30b653695558
 html"""
-<p>How a pencil is made [3]:</p>
+<p>How a pencil is made [5]:</p>
 
 <img src="https://i.postimg.cc/zv5QNk0f/Pencil-Tip.png"
 	width="700"
@@ -124,6 +117,25 @@ P &= \dfrac{(l-m)(1-\alpha) + m}{l}\\
 \end{align*}$$
 """
 
+# ╔═╡ 17148ec3-5c19-40de-babc-2bf29adf5782
+html"""
+<p>How a pencil is made [5]:</p>
+
+<img src="https://i.postimg.cc/tg3mB3mX/Common-Pencil.png"
+	width="700"
+	alt="(Image 1)">
+"""
+
+# ╔═╡ 1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
+md""""
+## Global estimates
+"""
+
+# ╔═╡ 09113d1e-da43-4507-bf7c-38a8a2f701d0
+md"""
+## Impact of graphite waste
+"""
+
 # ╔═╡ 60fd0347-50fe-42f7-9ccd-7ab2536dd591
 md"
 ## Proposed solutions
@@ -138,15 +150,6 @@ When a complete halting is ruled out, there are behaviors that, depending on the
 "
 
 
-# ╔═╡ 17148ec3-5c19-40de-babc-2bf29adf5782
-html"""
-<p>How a pencil is made [3]:</p>
-
-<img src="https://i.postimg.cc/tg3mB3mX/Common-Pencil.png"
-	width="700"
-	alt="(Image 1)">
-"""
-
 # ╔═╡ 3a66a494-5bdd-45aa-ae46-a6951a204b1f
 md"
 ## References
@@ -156,7 +159,15 @@ md"
 [2]   WIPO (2023). Graphite and its Applications. Geneva: World 
 Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.int/edocs/pubdocs/en/wipo-pub-1083-en-patent-landscape-report-graphite-and-its-applications.pdf 
 
-[3] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
+[3] Drawing Pencil Market Size, Share, Growth, Trends, Global Industry Analysis, By Type (Graphite Pencil & Colored Pencil), By Application (Commercial Use, School & Others), Regional Forecast From 2024 To 2032. (2024, Septiembre 21). Business Research Insights. Retrieved November 5, 2024, https://www.businessresearchinsights.com/market-reports/drawing-pencil-market-100922
+
+[4] Portafolio, R. (2019, July 22). ‘Vendemos más de 10 millones de lápices al año en Colombia.’ Portafolio.co. https://www.portafolio.co/negocios/empresas/vendemos-mas-de-10-millones-de-lapices-al-ano-en-colombia-531782
+
+[5] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
+
+### Searches in search engines
+- Statistics of pencil market
+- Mercado de lapices en colombia
 "
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1342,15 +1353,16 @@ version = "1.4.1+1"
 # ╟─b0a34497-b82b-45ca-824d-277127c87feb
 # ╟─d6c81059-612c-484e-80b7-e87da96621e7
 # ╠═5b2aa089-69d1-43a2-ac33-11a0f1a3833b
-# ╠═2187dca1-e998-4d0e-a564-965087eb9eaf
 # ╟─79011430-9d34-4cd2-aa74-7fb17b7376d2
-# ╟─7422ad93-5251-47ba-86ca-cce5a5b69a7f
+# ╠═7422ad93-5251-47ba-86ca-cce5a5b69a7f
 # ╠═fcf0912f-d1bc-4ae5-95eb-44b06d4d25b5
 # ╟─86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 # ╠═0ab91597-6cf9-4190-8351-30b653695558
 # ╠═3927fd97-d981-4c48-b6b5-eda6592a68e9
-# ╠═60fd0347-50fe-42f7-9ccd-7ab2536dd591
 # ╠═17148ec3-5c19-40de-babc-2bf29adf5782
+# ╠═1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
+# ╠═09113d1e-da43-4507-bf7c-38a8a2f701d0
+# ╠═60fd0347-50fe-42f7-9ccd-7ab2536dd591
 # ╠═3a66a494-5bdd-45aa-ae46-a6951a204b1f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
