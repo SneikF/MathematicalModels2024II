@@ -21,7 +21,7 @@ PlutoUI.TableOfContents(title="Report 1 - Graphite Waste", aside=true)
 
 # ╔═╡ 5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 md"""
-## Background
+# Background
 
 The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
 
@@ -33,7 +33,7 @@ The graphite is excellent for lubricants, greases, batteries, refractory materia
 $\scriptsize{\texttt{Figure 1. How a pencil is made. [2]}}$
 
 
-### Production and composition of pencils
+## Production and composition of pencils
 
 Pencils are made from a mixture of graphite, some type of clay, and wax. The amount of each material determines the 'hardness' of the pencil's mark, with a higher amount of graphite resulting in a darker line. Below are the quantities of materials used to manufacture certain types of pencils.
 
@@ -58,7 +58,7 @@ Pencils are made from a mixture of graphite, some type of clay, and wax. The amo
 | 6B             | 84%     | 10%     | 5%   |
 | 7B             | 87%     | 7%      | 5%   |
 
-### Pencil market in Colombia and the world
+## Pencil market in Colombia and the world
 
 Despite the rise of electronic devices such as tablets, e-readers, and computers, the market for pencils and related products has not declined. On the contrary, it has shown steady growth and is expected to continue this way over the next decade, reaching a market value of around 28 billion dollars by 2032[4]. In terms of units, it is estimated that about 14 billion pencils are produced annually.
 
