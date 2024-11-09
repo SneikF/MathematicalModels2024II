@@ -131,7 +131,8 @@ md"""
 
 # ╔═╡ 09113d1e-da43-4507-bf7c-38a8a2f701d0
 md"""
-# Impact of graphite waste
+# Wasted Graphite Impact
+With the above mathematical model, we concluded that the wasted average of the graphite material is very high and if we count the wood used in the same process, the wasted materials just only increase. We can't skip this wasted materials, nowadays, the climate impact  is a deterministic factor by our generation. Whit the wasted material we increase the $CO_2$ emmitions, destroyed environments, polluted lakes, among other factors. ''Production of graphite, the largest component of electric vehicle batteries by volume, relies on petroleum coke and other fossil fuels, creating a dilemma for carmakers pushing EVs as a zero-carbon transportation solution.'' [7]
 """
 
 # ╔═╡ 60fd0347-50fe-42f7-9ccd-7ab2536dd591
@@ -167,6 +168,7 @@ Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.i
 
 [7] Wikimedia Foundation. (2024, September 19). Mano. Wikipedia. https://es.wikipedia.org/wiki/Mano#Variaci%C3%B3n,_tama%C3%B1o_de_la_mano
 
+[8] Erickson, C. (2022, April 7). Graphite emissions fuel search for solutions along EV supply chain. S&P Global Market Intelligence. https://www.spglobal.com/marketintelligence/en/news-insights/latest-news-headlines/graphite-emissions-fuel-search-for-solutions-along-ev-supply-chain-69599516
 #### Searches in search engines
 - Statistics of pencil market
 - Mercado de lapices en colombia
