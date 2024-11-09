@@ -30,7 +30,7 @@ The graphite is excellent for lubricants, greases, batteries, refractory materia
 
 ![How_a_pencil_is_made](https://i.shgcdn.com/36ca2275-8ceb-4e3d-9c20-d6986b75d536/-/format/auto/-/preview/3000x3000/-/quality/lighter/)
 
-$\scriptsize{\texttt{Figure 1. How a pencil is made. [5]}}$
+$\scriptsize{\texttt{Figure 1. How a pencil is made. [2]}}$
 
 
 ### Production and composition of pencils
@@ -60,9 +60,9 @@ Pencils are made from a mixture of graphite, some type of clay, and wax. The amo
 
 ### Pencil market in Colombia and the world
 
-Despite the rise of electronic devices such as tablets, e-readers, and computers, the market for pencils and related products has not declined. On the contrary, it has shown steady growth and is expected to continue this way over the next decade, reaching a market value of around 28 billion dollars by 2032[3]. In terms of units, it is estimated that about 14 billion pencils are produced annually.
+Despite the rise of electronic devices such as tablets, e-readers, and computers, the market for pencils and related products has not declined. On the contrary, it has shown steady growth and is expected to continue this way over the next decade, reaching a market value of around 28 billion dollars by 2032[4]. In terms of units, it is estimated that about 14 billion pencils are produced annually.
 
-In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[4].
+In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[5].
 """
 
 # ╔═╡ 86709ed3-f1d4-46ca-a54e-72bdf9521cd1
@@ -77,20 +77,18 @@ Our goal is to estimate what percentage of graphite is wasted through the lifeti
 
 We make the following assumptions:
 
+- The graphite is distributed evenly throughout the lead.
 - The amount of graphite wasted between sharpenings is the same, and the pencil is initially unsharpened.
 - The pencil is sharpened at regular distances.
 - Once the pencil reaches a certain length, it becomes unusable, and what is left is wasted.
 
-We can roughly divide our pencil into two sections: the part that is used and the leftover. The used part can be further divided into what we will call segments, using as separators the points at which the pencil is sharpened, as shown in figure _. 
+We can roughly divide our pencil into two sections: the part that is used and the leftover. The used part can be further divided into what we will call segments, using as separators the points at which the pencil is sharpened, as shown in figure 2. 
 
 ![pencil_division](https://i.postimg.cc/021xLC3p/pencil-division.png)
 
 $\scriptsize{\texttt{Figure 2. Division of the pencil. The dashed lines indicate the position of the tip after sharpening.}}$
 
-
-Model 1
-
-Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, but we know that its volume is proportional to its length, so when taking a percentage, we can work with just the length. then, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. Calling $m$ the length of the leftover part, the used part has length $l-m$ and a percentage $\alpha$ of it will be used, while $1-\alpha$  parts of it will be wasted. Then we model the amount of wasted length as $(l-m)(1-\alpha) + m$ and we divide by $l$ to get the percentage of wasted graphite $P$ in terms of the three parameters described:
+Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, and given that its volume is proportional to its length, when taking the percentage, we can work with just the length of the pencil. Then, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. We let $m$ be the length of the leftover part, so the used part has length $l-m$ units and a percentage $\alpha$ of it will be used; while $1-\alpha$ parts of it will be wasted. The amount of wasted material becomes $(1-\alpha)(l-m)\pi r^2 + m\pi r^2$ cubic units. To get the percentage of wasted graphite $P$ in terms of the three parameters described we write:
 
 $$\begin{align*}
 P(l,m,\alpha) &= \dfrac{V_{wasted}}{V_{total}} = \dfrac{(l-m) (1-\alpha) \pi r^2+m \pi r^2 }{l \pi r^2} \\
@@ -100,29 +98,32 @@ P(l,m,\alpha) &= \dfrac{V_{wasted}}{V_{total}} = \dfrac{(l-m) (1-\alpha) \pi r^2
 &= 1-\alpha\left(1- \dfrac{m}{l}\right)
 \end{align*}$$
 
-We set our parameters to some educated guesses. According to the website, Unsharpen [6], many brands measure just above $17.5$ cm in length. We did the experiment with some local brands (Figure X) and got similar results, we let $l=17$ cm. We take $m = 6.4$ cm, a rough estimate of the length of a pencil lead when the pencil stops resting comfortably in the curve between the thumb and the index finger for an average sized male hand [7] (accounting for the clamp but not the eraser, i.e., the length at which the clamp would stop resting against the hand). Finally, we take $\alpha=0.32$. 
+## Parameter estimation
 
-Depending on the context, $\alpha$ gives great expressibility to the model. For example, for a scenario where we only use a faulty pencil sharpener that always breaks the tip of the pencil once before finishing the job, we would pick a value of $\alpha$ less than $0.5$. To construct $\alpha$ we looked at the measurements of a common pencil lead and worked out a general scenario where the pencil is sharpened whenever the tip is completely flat. After sharpening, the tip is left cone-shaped. This cone makes up for $\dfrac{1}{3}$ of what was previously a cylinder, and from this conical tip, we assume most of the lead of an HB pencil will stay on paper when in usage, thus we let the percentage of used graphite between sharpening be: $\alpha = 0.96\dfrac{1}{3}$. One could guess a greater percentage of the tip is lost while writing for softer pencils like those graded B6 and B8. We estimate the percentage of graphite wasted throught the lifetime of a pencil to be the around $80$%:
-
-$P(17, 6.4, 0.32) = 1-0.32\left(1- \dfrac{6.4}{17}\right) \approx 0.93$
-
-In contrast, if the pencil is sharpen until it resembles a cone, then $m=0.5$ cm, and we calculate $69$ percent of the lead is wasted:
-
-$P(17, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17}\right) \approx 0.69$
-
-"""
-
-# ╔═╡ c69caf3a-ab49-4e4d-8f4c-63f880d6ca6d
-md"
-## Model implementation
+We set our parameters to some educated guesses. According to the website, Unsharpen [6], many pencil brands are just over $17.5$ cm long. We did the experiment with some local brands (Figure 3) and got similar results; we let $l=17.7$ cm. We take $m = 6.4$ cm, a rough estimate of the length of a pencil lead when the pencil stops resting comfortably in the curve between the thumb and the index finger for an average sized male hand [7] (accounting for a clamp but not an eraser, i.e., the length at which the clamp would stop resting against the hand). Finally, we take $\alpha=0.32$. 
 
 ![pencil_division](https://i.postimg.cc/YqvNTqhh/Common-Pencil.png)
-$\scriptsize{\texttt{Figure 3. A common pencil}}$
+
+$\scriptsize{\texttt{Figure 3. A regular pencil.}}$
+
+Depending on the context, $\alpha$ gives great expressibility to the model. For example, in a scenario where we only use a faulty pencil sharpener that consistently breaks the tip of the pencil once before finishing the job, we would pick $\alpha$ to be less than $0.5$. To choose $\alpha$, we looked at the measurements of a common pencil lead and worked out a general optimitic scenario where the pencil is sharpened whenever the tip is worn down to the level of the woodcase. After sharpening, the tip is cone-shaped. This cone makes up for $\dfrac{1}{3}$ of what was previously a cylinder, as ilustrated in figure 4, and from this conical tip, we assume most of the lead of an HB pencil will stay on paper when in usage, thus we let the percentage of used graphite between sharpening be: $\alpha = 0.96\dfrac{1}{3}$. 
 
 ![pencil_division](https://i.postimg.cc/0NjwF9kV/Pencil-Tip.png)
-$\scriptsize{\texttt{Figure 4. A common Tip pencil}}$
 
-"
+$\scriptsize{\texttt{Figure 4. Measurements of the tip of a common pencil.}}$
+
+One can guess, rightfully so, that a higher percentage of the tip is lost when using softer tipped pencils, like those graded B6 and B8. 
+
+## Implementation
+
+We estimate the percentage of graphite wasted throught the lifetime of a pencil to be the around $80$%:
+
+$P(17.7, 6.4, 0.32) = 1-0.32\left(1- \dfrac{6.4}{17.7}\right) \approx 0.8$
+
+In contrast, if the pencil is sharpened to the point where it resembles a cone, then $m=0.5$ cm, and we calculate $69$ percent of the lead is wasted. This is what one of the best case scenarios (lesser waste) would look like. We are underestimating what would, most often than not, actually happen:
+
+$P(17.7, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17.7}\right) \approx 0.69$
+"""
 
 # ╔═╡ 1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
 md"""
@@ -132,7 +133,7 @@ md"""
 # ╔═╡ 09113d1e-da43-4507-bf7c-38a8a2f701d0
 md"""
 # Wasted Graphite Impact
-With the above mathematical model, we concluded that the wasted average of the graphite material is very high and if we count the wood used in the same process, the wasted materials just only increase. We can't skip this wasted materials, nowadays, the climate impact  is a deterministic factor by our generation. Whit the wasted material we increase the $CO_2$ emmitions, destroyed environments, polluted lakes, among other factors. ''Production of graphite, the largest component of electric vehicle batteries by volume, relies on petroleum coke and other fossil fuels, creating a dilemma for carmakers pushing EVs as a zero-carbon transportation solution.'' [7]
+With the above mathematical model, we concluded that the wasted average of the graphite material is very high and if we count the wood used in the same process, the wasted materials just only increase. We can't skip this wasted materials, nowadays, the climate impact  is a deterministic factor by our generation. Whit the wasted material we increase the $CO_2$ emmitions, destroyed environments, polluted lakes, among other factors. ''Production of graphite, the largest component of electric vehicle batteries by volume, relies on petroleum coke and other fossil fuels, creating a dilemma for carmakers pushing EVs as a zero-carbon transportation solution.'' [8]
 """
 
 # ╔═╡ 60fd0347-50fe-42f7-9ccd-7ab2536dd591
@@ -155,14 +156,14 @@ md"
 
 [1] Eastcarb. (2024, October 21). What is graphite? Eastcarb. https://www.eastcarb.com/what-is-graphite/#Applications_of_Graphite
 
-[2]   WIPO (2023). Graphite and its Applications. Geneva: World 
+[2] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
+
+[3]   WIPO (2023). Graphite and its Applications. Geneva: World 
 Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.int/edocs/pubdocs/en/wipo-pub-1083-en-patent-landscape-report-graphite-and-its-applications.pdf 
 
-[3] Drawing Pencil Market Size, Share, Growth, Trends, Global Industry Analysis, By Type (Graphite Pencil & Colored Pencil), By Application (Commercial Use, School & Others), Regional Forecast From 2024 To 2032. (2024, Septiembre 21). Business Research Insights. Retrieved November 5, 2024, https://www.businessresearchinsights.com/market-reports/drawing-pencil-market-100922
+[4] Drawing Pencil Market Size, Share, Growth, Trends, Global Industry Analysis, By Type (Graphite Pencil & Colored Pencil), By Application (Commercial Use, School & Others), Regional Forecast From 2024 To 2032. (2024, Septiembre 21). Business Research Insights. Retrieved November 5, 2024, https://www.businessresearchinsights.com/market-reports/drawing-pencil-market-100922
 
-[4] Portafolio, R. (2019, July 22). ‘Vendemos más de 10 millones de lápices al año en Colombia.’ Portafolio.co. https://www.portafolio.co/negocios/empresas/vendemos-mas-de-10-millones-de-lapices-al-ano-en-colombia-531782
-
-[5] Musgrave Pencil. (2019, May 11). How a pencil is made [Image 1]. Musgrave Pencil. https://musgravepencil.com/blogs/news/howapencilismade?srsltid=AfmBOoolgXjTStS074UcRwWCTE93FYP7SFB2Q9vwNMe4xlYPSJV0crS1, Promt: 'How to make a pencil, images'
+[5] Portafolio, R. (2019, July 22). ‘Vendemos más de 10 millones de lápices al año en Colombia.’ Portafolio.co. https://www.portafolio.co/negocios/empresas/vendemos-mas-de-10-millones-de-lapices-al-ano-en-colombia-531782
 
 [6] Unsharpen Team. (2022, December 23). How long is a pencil?. Unsharpen. https://unsharpen.com/how-long-is-a-pencil//
 
