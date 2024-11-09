@@ -158,7 +158,7 @@ $0.69 * 0.68 * 4.9 \approx 2.3g$
 
 With this data, we can estimate the graphite waste for pencils sold in Colombia, which amounts to 276 tons. For the 14 billion pencils sold worldwide each year, the total graphite waste is approximately 32,200 tons.
 
-You can play with these numbers using the following cells
+You can play with these numbers using the following cells.
 """
 
 # ╔═╡ 04d024e4-58f4-404b-8ce0-40bcddcb9083
@@ -239,7 +239,7 @@ function calculateGraphiteWaste(params)
 
 	waste = round(waste, digits=2)
 	
-	HTML("<span style='font-size:40px;'> Using $(numberOfPenciles) $(pencilType) pencils ($(pencilComposition)%) , $(waste) tons of graphite are wasted</span>")
+	HTML("<span style='font-size:40px;'> Using $(numberOfPenciles) $(pencilType) pencils ($(pencilComposition)%), a total of $(waste) tons of graphite are wasted</span>")
 end
 
 # ╔═╡ 3757ef55-99aa-4bef-af6e-022b40729f4e
@@ -1479,7 +1479,6 @@ version = "1.4.1+1"
 # ╟─79011430-9d34-4cd2-aa74-7fb17b7376d2
 # ╠═86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 # ╠═3927fd97-d981-4c48-b6b5-eda6592a68e9
-# ╠═c69caf3a-ab49-4e4d-8f4c-63f880d6ca6d
 # ╠═1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
 # ╠═6c7127d4-8234-47d7-b7a1-0f3c85ce1eed
 # ╠═04d024e4-58f4-404b-8ce0-40bcddcb9083
