@@ -116,7 +116,7 @@ $P(17, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17}\right) \approx 0.69$
 md"
 ## Model implementation
 
-We consider a common pencil with the following sizes:
+We consider a common pencil with the following size:
 
 ![pencil_division](https://i.postimg.cc/YqvNTqhh/Common-Pencil.png)
 
