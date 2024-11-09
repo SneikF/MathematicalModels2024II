@@ -4,10 +4,22 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    #! format: off
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+    #! format: on
+end
+
 # ╔═╡ d6c81059-612c-484e-80b7-e87da96621e7
 using Plots, LaTeXStrings
 
-# ╔═╡ 79011430-9d34-4cd2-aa74-7fb17b7376d2
+# ╔═╡ 6c7127d4-8234-47d7-b7a1-0f3c85ce1eed
 using PlutoUI
 
 # ╔═╡ 421fe5f0-9af0-11ef-3608-6fecdfb91030
@@ -64,6 +76,12 @@ Despite the rise of electronic devices such as tablets, e-readers, and computers
 
 In Colombia, by 2019, the graphite pencil market had reached a value of 8.5 million dollars, which would represent approximately 120 million units[5].
 """
+
+# ╔═╡ 79011430-9d34-4cd2-aa74-7fb17b7376d2
+# ╠═╡ disabled = true
+#=╠═╡
+using PlutoUI
+  ╠═╡ =#
 
 # ╔═╡ 86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 md"
@@ -132,7 +150,100 @@ $P(17.7, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17.7}\right) \approx 0.69$
 # ╔═╡ 1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
 md"""
 # Global estimates
+Using this model and the resulting data, we can estimate how much graphite is wasted in the global pencil market. For this calculation, we will consider an HB pencil with a core weighing 4.9g. The core of the HB pencil contains 68% graphite.
+
+Based on our model, we found that the waste percentage is 69% if the entire pencil is used. Therefore, the amount of graphite wasted per pencil is calculated as follows:
+
+$0.69 * 0.68 * 4.9 \approx 2.3g$
+
+With this data, we can estimate the graphite waste for pencils sold in Colombia, which amounts to 276 tons. For the 14 billion pencils sold worldwide each year, the total graphite waste is approximately 32,200 tons.
+
+You can play with these numbers using the following cells
 """
+
+# ╔═╡ 04d024e4-58f4-404b-8ce0-40bcddcb9083
+import PlutoUI: combine
+
+# ╔═╡ ca1fe328-5079-4e1f-b18e-cd2823c367be
+@bind params PlutoUI.combine() do Child
+	md"""
+	## Percentage of waste
+	Pencil length:
+	$(Child(Slider(1:30, default=17)))
+	
+	Leftover length:
+	$(Child(Slider(0:0.1:30, default=6.4)))
+	
+	Percentage used:
+	$(Child(Slider(0:0.01:1, default=0.32))).
+	"""
+end
+
+# ╔═╡ a793ab50-a1ef-4702-9b8f-f85efc0d5919
+function calculatePercentageOfWaste(params, print=true)
+	waste = (1-params[3]*(1-params[2]/params[1]))
+	waste = round(waste, digits=2)
+	if print
+		HTML("<span style='font-size:40px;'> The percentage of waste is $(waste*100) % </span>")
+	else 
+		 return waste
+	end
+end
+
+
+# ╔═╡ ed262176-2882-4351-b701-66c4423c0a4a
+calculatePercentageOfWaste(params)
+
+# ╔═╡ a0b9f6c1-ac17-47c7-ab19-8a7313c702d4
+md"""
+## Tons of graphite wasted
+1. Select a type of pencil.
+"""
+
+# ╔═╡ a14d02e9-b2e0-4cf6-aa9c-c7a09b7f69dd
+@bind pencilType Select(["9H", "8H", "7H", "6H", "5H", "4H", "3H", "2H", "H", "F", "HB", "B", "2B", "3B", "4B", "5B", "6B", "7B"]
+)
+
+# ╔═╡ 0fa62021-49b8-4f97-964a-f7a32720bb90
+md"""
+2. Select the number of penciles used.
+"""
+
+# ╔═╡ 01f10169-5ed0-40ae-a678-6c93cc38d476
+@bind numberOfPenciles Slider(1000000:10000:20000000000, default=20000000)
+
+# ╔═╡ 5a4a3cb2-6794-4ee2-8e0e-58a722664f0d
+function calculateGraphiteWaste(params)
+	pencilComposition = Dict(
+	    "9H" => [0.41, 0.53, 0.05],
+	    "8H" => [0.44, 0.50, 0.05],
+	    "7H" => [0.47, 0.47, 0.05],
+	    "6H" => [0.50, 0.45, 0.05],
+	    "5H" => [0.52, 0.42, 0.05],
+	    "4H" => [0.55, 0.39, 0.05],
+	    "3H" => [0.58, 0.36, 0.05],
+	    "2H" => [0.60, 0.34, 0.05],
+	    "H"  => [0.63, 0.31, 0.05],
+	    "F"  => [0.66, 0.28, 0.05],
+	    "HB" => [0.68, 0.26, 0.05],
+	    "B"  => [0.71, 0.23, 0.05],
+	    "2B" => [0.74, 0.20, 0.05],
+	    "3B" => [0.76, 0.18, 0.05],
+	    "4B" => [0.79, 0.15, 0.05],
+	    "5B" => [0.82, 0.12, 0.05],
+	    "6B" => [0.84, 0.10, 0.05],
+	    "7B" => [0.87, 0.07, 0.05]
+	)[pencilType][1]
+
+	waste = (calculatePercentageOfWaste(params, false) * pencilComposition * 4.9 * numberOfPenciles) / 1000000
+
+	waste = round(waste, digits=2)
+	
+	HTML("<span style='font-size:40px;'> Using $(numberOfPenciles) $(pencilType) pencils ($(pencilComposition)%) , $(waste) tons of graphite are wasted</span>")
+end
+
+# ╔═╡ 3757ef55-99aa-4bef-af6e-022b40729f4e
+calculateGraphiteWaste(params)
 
 # ╔═╡ 09113d1e-da43-4507-bf7c-38a8a2f701d0
 md"""
@@ -1364,12 +1475,23 @@ version = "1.4.1+1"
 # ╟─421fe5f0-9af0-11ef-3608-6fecdfb91030
 # ╟─b0a34497-b82b-45ca-824d-277127c87feb
 # ╟─d6c81059-612c-484e-80b7-e87da96621e7
-# ╟─5b2aa089-69d1-43a2-ac33-11a0f1a3833b
+# ╠═5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 # ╟─79011430-9d34-4cd2-aa74-7fb17b7376d2
 # ╠═86709ed3-f1d4-46ca-a54e-72bdf9521cd1
 # ╠═3927fd97-d981-4c48-b6b5-eda6592a68e9
 # ╠═c69caf3a-ab49-4e4d-8f4c-63f880d6ca6d
 # ╠═1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
+# ╠═6c7127d4-8234-47d7-b7a1-0f3c85ce1eed
+# ╠═04d024e4-58f4-404b-8ce0-40bcddcb9083
+# ╠═ca1fe328-5079-4e1f-b18e-cd2823c367be
+# ╠═a793ab50-a1ef-4702-9b8f-f85efc0d5919
+# ╠═ed262176-2882-4351-b701-66c4423c0a4a
+# ╠═a0b9f6c1-ac17-47c7-ab19-8a7313c702d4
+# ╠═a14d02e9-b2e0-4cf6-aa9c-c7a09b7f69dd
+# ╠═0fa62021-49b8-4f97-964a-f7a32720bb90
+# ╠═01f10169-5ed0-40ae-a678-6c93cc38d476
+# ╠═5a4a3cb2-6794-4ee2-8e0e-58a722664f0d
+# ╠═3757ef55-99aa-4bef-af6e-022b40729f4e
 # ╠═09113d1e-da43-4507-bf7c-38a8a2f701d0
 # ╟─60fd0347-50fe-42f7-9ccd-7ab2536dd591
 # ╟─3a66a494-5bdd-45aa-ae46-a6951a204b1f
