@@ -72,7 +72,7 @@ md"
 
 # ╔═╡ 3927fd97-d981-4c48-b6b5-eda6592a68e9
 md"""
-## The mathematical model
+# The mathematical model
 Our goal is to estimate what percentage of graphite is wasted through the lifetime of a wood-cased pencil, knowing its shape and dimensions.
 
 We make the following assumptions:
@@ -100,17 +100,21 @@ P(l,m,\alpha) &= \dfrac{V_{wasted}}{V_{total}} = \dfrac{(l-m) (1-\alpha) \pi r^2
 
 ## Parameter estimation
 
-We set our parameters to some educated guesses. According to the website, Unsharpen [6], many pencil brands are just over $17.5$ cm long. We did the experiment with some local brands (Figure 3) and got similar results; we let $l=17.7$ cm. We take $m = 6.4$ cm, a rough estimate of the length of a pencil lead when the pencil stops resting comfortably in the curve between the thumb and the index finger for an average sized male hand [7] (accounting for a clamp but not an eraser, i.e., the length at which the clamp would stop resting against the hand). Finally, we take $\alpha=0.32$. 
+We set our parameters to some educated guesses. According to the website, Unsharpen [6], many pencil brands are just over $17.5$ cm long. We did the experiment with some local brands (Figure 3) and got similar results; we let $l=17.7$ cm. We take $m = 6.4$ cm, a rough estimate of the length of a pencil lead when the pencil stops resting comfortably in the curve between the thumb and the index finger for an average sized male hand [7] (accounting for a clamp but not an eraser, i.e., the length at which the clamp would stop resting against the hand), as shown in figure 4. Finally, we take $\alpha=0.32$. 
 
 ![pencil_division](https://i.postimg.cc/YqvNTqhh/Common-Pencil.png)
 
 $\scriptsize{\texttt{Figure 3. A regular pencil.}}$
 
-Depending on the context, $\alpha$ gives great expressibility to the model. For example, in a scenario where we only use a faulty pencil sharpener that consistently breaks the tip of the pencil once before finishing the job, we would pick $\alpha$ to be less than $0.5$. To choose $\alpha$, we looked at the measurements of a common pencil lead and worked out a general optimitic scenario where the pencil is sharpened whenever the tip is worn down to the level of the woodcase. After sharpening, the tip is cone-shaped. This cone makes up for $\dfrac{1}{3}$ of what was previously a cylinder, as ilustrated in figure 4, and from this conical tip, we assume most of the lead of an HB pencil will stay on paper when in usage, thus we let the percentage of used graphite between sharpening be: $\alpha = 0.96\dfrac{1}{3}$. 
+![hand-n-pencil](https://i.postimg.cc/25KwH5Z7/hand-n-pencil.jpg)
+
+$\scriptsize{\texttt{Figure 4. Pencil resting between thumb and forefinger.}}$
+
+Depending on the context, $\alpha$ gives great expressibility to the model. For example, in a scenario where we only use a faulty pencil sharpener that consistently breaks the tip of the pencil once before finishing the job, we would pick $\alpha$ to be less than $0.5$. To choose $\alpha$, we looked at the measurements of a common pencil lead and worked out a general optimitic scenario where the pencil is sharpened whenever the tip is worn down to the level of the woodcase. After sharpening, the tip is cone-shaped. This cone makes up for $\dfrac{1}{3}$ of what was previously a cylinder, as ilustrated in figure 5, and from this conical tip, we assume most of the lead of an HB pencil will stay on paper when in usage, thus we let the percentage of used graphite between sharpening be: $\alpha = 0.96\dfrac{1}{3}$. 
 
 ![pencil_division](https://i.postimg.cc/0NjwF9kV/Pencil-Tip.png)
 
-$\scriptsize{\texttt{Figure 4. Measurements of the tip of a common pencil.}}$
+$\scriptsize{\texttt{Figure 5. Measurements of the tip of a common pencil.}}$
 
 One can guess, rightfully so, that a higher percentage of the tip is lost when using softer tipped pencils, like those graded B6 and B8. 
 
@@ -142,11 +146,14 @@ md"
 
 Now that the reach, overall waste, and impact derived from the usage of graphite in our pencils were pointed out, the focus is set on what can be done to alleviate the problem. Two classes of solutions are proposed: those focused on stopping the consumption of pencils all together and those focused on reducing the waste when using them.
 
-
 To begin with, we present alternatives to the wood-cased pencil, which reduces the graphite waste. Adopting mechanical pencils, especially those with thin leads, removes the need to sharpen the tip, which was one of the sources of waste considered in our model. This alternative could work for people concerned about the forestal resources directed to producing pencils and people who prefer a writing tool with a more consistent balance and line width. Another choice are digital tools. Nowadays, technology enables this option for anyone willing to pay, from artists to students.
 
+When a complete halting is ruled out, there are behaviors that, depending on the task of the user, can be adopted to stretch the life time of a wooden pencil, thus reducing the waste of graphite over time. This includes actions like:
 
-When a complete halting is ruled out, there are behaviors that, depending on the task of the user, can be adopted to stretch the life time of a wooden pencil, thus reducing the waste of graphite over time. This includes actions like being careful in the handling of the pencil to reduce the risk of fracturing the lead inside, hence preventing the tip from falling off later. Using pencil extenders to be able to comfortably make use of a larger portion of the pencil. Applying less pressure when using the pencil or using pencils that have less graphite. And even actions like using a knife to sharpen the pencil, caring to shave as little graphite as possible.
+- Being careful in the handling of the pencil to reduce the risk of fracturing the lead inside, hence preventing the tip from falling off later.
+- Using pencil extenders to be able to comfortably make use of a larger portion of the pencil.
+- Applying less pressure when using the pencil or using pencils with a lower concentration of graphite.
+- Using a knife to sharpen the pencil, caring to shave as little graphite as possible.
 "
 
 
