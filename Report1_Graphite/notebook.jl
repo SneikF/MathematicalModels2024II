@@ -7,6 +7,15 @@ using InteractiveUtils
 # ╔═╡ d6c81059-612c-484e-80b7-e87da96621e7
 using Plots, LaTeXStrings
 
+# ╔═╡ 79011430-9d34-4cd2-aa74-7fb17b7376d2
+using PlutoUI
+
+# ╔═╡ 421fe5f0-9af0-11ef-3608-6fecdfb91030
+# ╠═╡ disabled = true
+#=╠═╡
+using PlutoUI
+  ╠═╡ =#
+
 # ╔═╡ b0a34497-b82b-45ca-824d-277127c87feb
 PlutoUI.TableOfContents(title="Report 1 - Graphite Waste", aside=true)
 
@@ -84,7 +93,8 @@ Model 1
 Given our assumptions, the percentage of wasted graphite in these segments is the same for all segments, so the percentage of graphite in the used section that is wasted is the same as the percentage of graphite wasted in a single segment. We could model the lead of the pencil as a right circular cylinder, but we know that its volume is proportional to its length, so when taking a percentage, we can work with just the length. then, we let $l$ be the length of the pencil, and simply think of the pencil as a line of length $l$ units. Calling $m$ the length of the leftover part, the used part has length $l-m$ and a percentage $\alpha$ of it will be used, while $1-\alpha$  parts of it will be wasted. Then we model the amount of wasted length as $(l-m)(1-\alpha) + m$ and we divide by $l$ to get the percentage of wasted graphite $P$ in terms of the three parameters described:
 
 $$\begin{align*}
-P(l,m,\alpha) &= \dfrac{(l-m)(1-\alpha) + m}{l}\\
+P(l,m,\alpha) &= \dfrac{V_{wasted}}{V_{total}} = \dfrac{(l-m) (1-\alpha) \pi r^2+m \pi r^2 }{l \pi r^2} \\
+&= \dfrac{(l-m)(1-\alpha) + m}{l}\\
 &=  \dfrac{l-l\alpha-m+m\alpha + m}{l}\\
 &=  1-\alpha + \dfrac{m\alpha}{l}\\
 &= 1-\alpha\left(1- \dfrac{m}{l}\right)
@@ -94,31 +104,11 @@ We set our parameters to some educated guesses. According to the website, Unshar
 
 Depending on the context, $\alpha$ gives great expressibility to the model. For example, for a scenario where we only use a faulty pencil sharpener that always breaks the tip of the pencil once before finishing the job, we would pick a value of $\alpha$ less than $0.5$. To construct $\alpha$ we looked at the measurements of a common pencil lead and worked out a general scenario where the pencil is sharpened whenever the tip is completely flat. After sharpening, the tip is left cone-shaped. This cone makes up for $\dfrac{1}{3}$ of what was previously a cylinder, and from this conical tip, we assume most of the lead of an HB pencil will stay on paper when in usage, thus we let the percentage of used graphite between sharpening be: $\alpha = 0.96\dfrac{1}{3}$. One could guess a greater percentage of the tip is lost while writing for softer pencils like those graded B6 and B8. We estimate the percentage of graphite wasted throught the lifetime of a pencil to be the around $80$%:
 
-$P(17, 6.4, 0.32) = 1-0.32\left(1- \dfrac{6.4}{17}\right) \approx 0.8$
+$P(17, 6.4, 0.32) = 1-0.32\left(1- \dfrac{6.4}{17}\right) \approx 0.93$
 
 In contrast, if the pencil is sharpen until it resembles a cone, then $m=0.5$ cm, and we calculate $69$ percent of the lead is wasted:
 
 $P(17, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17}\right) \approx 0.69$
-
-Model 2
-
-We will consider the assumptions stated above. Let $l$ represent the length of the pencil, and for simplicity, treat the pencil as a line segment of length $l$ units. Let $m$ be the length of the leftover part, so the used portion has length $(l-m)$. A percentage $\alpha$ of this used portion will be consumed, while the remaining $1 - \alpha$ will be wasted.
-
-Additionally, when we sharpen the pencil, we waste the difference in volume between the cylinder and the cone at the tip, which is $V_{\text{cylinder}}-V_{\text{cone}}$.
-
-To model this, we assume that each pencil lead has length $s$, meaning a pencil contains $(l - m)/s$ leads.
-
-With these considerations, we propose the following model for to get the percentage of wasted graphite $P$:
-
-
-$$\begin{align*}
-P &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone})+V_{cone}\cdot(1-\alpha)\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
- &= \dfrac{\dfrac{(l-m)}{s}\bigg((V_{cylinder}-V_{cone} \cdot \alpha\bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
- &= \dfrac{\dfrac{(l-m)}{s}\bigg(\dfrac{2}{3} \pi r^2 s + \dfrac{1}{3} \pi r^2 s \cdot \alpha \bigg) + \pi r^2\cdot m}{\pi r^2 \cdot l}\\
- &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) \pi r^2 + \pi r^2 \cdot m}{\pi r^2 \cdot l} \\
- &= \dfrac{(l-m)\bigg(\dfrac{2}{3} + \dfrac{1}{3} \cdot \alpha \bigg) + m}{l} \\
- &= \dfrac{(l-m)(2 + \alpha ) + 3m}{3l}
-\end{align*}$$
 
 """
 
@@ -128,13 +118,13 @@ md"
 
 We consider a common pencil with the following sizes:
 
-![pencil_division](https://i.postimg.cc/tg3mB3mX/Common-Pencil.png)
+![pencil_division](https://i.postimg.cc/YqvNTqhh/Common-Pencil.png)
 
 $\scriptsize{\texttt{Figure 3. A common pencil}}$
 
 the length of a human hand is $175 mm$ on average, and we weill assume that the minimum size of the pencil that a person can hold or use effectively is  a pencil with $m = 65 mm$. On the other hand, a common pencil lead has $s=2 mm$ and, especially with heavy use, some estimates suggest that up to $1-\alpha = 20\%$ or more of the graphite pencil can be'wasted' during writing process. This 'wasted' material is not directly transferred onto the paper but is instead either worn off as fine dust or shavings, or left behind as unusable remnants.
 
-![pencil_division](https://i.postimg.cc/WpHptx5w/Pencil-Tip.png)
+![pencil_division](https://i.postimg.cc/0NjwF9kV/Pencil-Tip.png)
 
 $\scriptsize{\texttt{Figure 4. A common Tip pencil}}$
 
@@ -194,15 +184,6 @@ Intellectual Property Organization. DOI: 10.34667/tind.47589. https://www.wipo.i
 - Statistics of pencil market
 - Mercado de lapices en colombia
 "
-
-# ╔═╡ 79011430-9d34-4cd2-aa74-7fb17b7376d2
-using PlutoUI
-
-# ╔═╡ 421fe5f0-9af0-11ef-3608-6fecdfb91030
-# ╠═╡ disabled = true
-#=╠═╡
-using PlutoUI
-  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
