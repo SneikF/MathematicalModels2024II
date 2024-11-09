@@ -116,24 +116,11 @@ $P(17, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17}\right) \approx 0.69$
 md"
 ## Model implementation
 
-We consider a common pencil with the following size:
-
 ![pencil_division](https://i.postimg.cc/YqvNTqhh/Common-Pencil.png)
-
 $\scriptsize{\texttt{Figure 3. A common pencil}}$
 
-the length of a human hand is $175 mm$ on average, and we weill assume that the minimum size of the pencil that a person can hold or use effectively is  a pencil with $m = 65 mm$. On the other hand, a common pencil lead has $s=2 mm$ and, especially with heavy use, some estimates suggest that up to $1-\alpha = 20\%$ or more of the graphite pencil can be'wasted' during writing process. This 'wasted' material is not directly transferred onto the paper but is instead either worn off as fine dust or shavings, or left behind as unusable remnants.
-
 ![pencil_division](https://i.postimg.cc/0NjwF9kV/Pencil-Tip.png)
-
 $\scriptsize{\texttt{Figure 4. A common Tip pencil}}$
-
-Therefore, with this data and the above model, we estimate that the wasted percentage in a common pencil is:
-
-$$\begin{align*}
-P &= \dfrac{(l-m)(2 + \alpha ) + 3m}{3l} \\
-  &=  0
-\end{align*}$$
 
 "
 
