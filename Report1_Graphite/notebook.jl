@@ -33,6 +33,9 @@ PlutoUI.TableOfContents(title="Report 1 - Graphite Waste", aside=true)
 
 # ╔═╡ 5b2aa089-69d1-43a2-ac33-11a0f1a3833b
 md"""
+How much graphite is wasted in pencils?
+==============
+
 # Background
 
 The graphite is a material consisting in carbon atoms, in normal conditions it is pure carbon with hexagonal flat arrenges; this material is stable and it has excellent refractory properties. We can find natural graphite and synthetic graphite; the natural or falke graphite can be  extrated from rocks with industrial process, this first stage also has effects or impacts on the environment such as: pollution, habitat destruction, or deforestation leading to loss of biodiversity; the syntheticor artificial graphite has a high production cost and impacts such that carbon emissions [1], [2]. 
@@ -145,6 +148,11 @@ $P(17.7, 6.4, 0.32) = 1-0.32\left(1- \dfrac{6.4}{17.7}\right) \approx 0.8$
 In contrast, if the pencil is sharpened to the point where it resembles a cone, then $m=0.5$ cm, and we calculate $69$ percent of the lead is wasted. This is what one of the best case scenarios (lesser waste) would look like. We are underestimating what would, most often than not, actually happen:
 
 $P(17.7, 0.5, 0.32) = 1-0.32\left(1- \dfrac{0.5}{17.7}\right) \approx 0.69$
+
+
+Another scenario we can explore, is imagining the tip breaks once every time we sharpen the pencil. Assuming a cylinder of the same height as a lead tip cone is lost when the tip falls off, the amount of lead that ends up being used is $\dfrac{1}{6}$ of a fragment, so we let $\alpha=0.96\dfrac{1}{6}=0.16$. Should this hold until our pencil reaches $3$ cm long, around $87$% of the graphite is wasted:
+
+$P(17.7, 3, 0.16) = 1-0.16\left(1- \dfrac{3}{17.7}\right) \approx 0.87$
 """
 
 # ╔═╡ 1dfa00cb-fc16-4d0f-a80b-b1ec08fc6ae5
