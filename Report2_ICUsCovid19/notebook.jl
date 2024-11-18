@@ -21,7 +21,7 @@ How many ICUs were used during COVID-19 in some IPSs from Colombia?
 
 ## Solution with a Cubic Polynomial Model
 
-Using a cubic polynomial in four subintervals $I_1, I_2, I_3$ and $I_4$, each consisting of 100 days, the model will fit the different data sets with cubic curves. The idea is take a data set from [1]
+Using a cubic polynomial and data set with 100 days, the model will fit the different data sets with cubic curves. The idea is take a data set from [1]
 """
 
 # ╔═╡ 3600ad57-c966-4207-82f7-1fc5180ebafb
@@ -141,7 +141,7 @@ scatter(time,percentage,ls=:dash,label="Percentage",lw=10, xlabel = "Days ",yaxi
 md"""
 ## Cubic Polynomial Model
 
-We will use the the next form for a subinterval $I_1$:
+We will use the the next form for by data set:
 
 $$P(t) \approx a + bt + ct^2 + dt^3$$
 
@@ -181,11 +181,11 @@ oC.minimizer
 
 # ╔═╡ 32efcd0b-f87c-4d87-ae70-81f8338d17e0
 md"""
-With the Nelder-Mead Algorithm the nearby cubic polynomial by our data set in the interval $I_1$ is:  
+With the Nelder-Mead Algorithm the nearby cubic polynomial by our data set is:  
 
 $V(t)=56.5827 - 0.197499t +  0.0235466t^2 - 0.000193017 t^3$
 
-And the following graph show us the cubic polynomial model versus our data set $I_1$ 
+And the following graph show us the cubic polynomial model versus our data set 
 """
 
 # ╔═╡ 20c0a5f4-bfbb-40b5-8a4c-c8c6713bdd6b
