@@ -1106,6 +1106,74 @@ end
 
 # Falta arregloar variables y revisar modelo differencial
 
+# ╔═╡ 264a2140-404a-4643-8ff4-17bf2a581ae0
+function resFab(fun)
+	function res(parameters, data)
+		model = [fun(parameters..., x) for x in 1:length(data)]
+		return norm(data-model)
+	end
+	return res
+end
+
+# ╔═╡ dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
+function optimize(fun, guess, data) 
+	rPL(par) =  resFab(fun)(par, data)
+	oL = Optim.optimize(rPL, guess, LBFGS())
+	y = [fun(oL.minimizer..., x) for x in 1:length(data)]
+	scatter(data)
+	plot!(y, linewidth=5)
+end
+
+# ╔═╡ 1fccab4b-1804-4c7d-b231-3d0cb1331160
+F1 = (L, C, A, x) -> L/(1+C * exp(A*x))
+
+# ╔═╡ c20ddc6b-24fb-44b7-a8f2-233e3c521961
+F2 = (A, B, x) -> A*1/x + B
+
+# ╔═╡ d4720048-c73c-4b72-a19d-33c9d684ef43
+resFab(F1)([0.3,0.1,0.01], totalPercentage)
+
+# ╔═╡ 67826398-1d69-45fd-a1a4-da8b4a47dcf1
+resFab(F2)([0.3,0.1], totalPercentage)
+
+# ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
+optimize(F1, [0.3, 0.1, 0.01], totalPercentage)
+
+# ╔═╡ 2c7dd3a9-a66b-4077-ad26-9461d7ad5961
+optimize(F2, [0.3, 0.1], totalPercentage)
+
+# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
+md"""
+## Bibliografia
+[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
+"""
+
+# ╔═╡ 28f39121-551e-4ecb-b857-444b84b9556a
+function residue_poly3(coefs, P, t)
+	a,b,c,d = coefs
+	oneaux = fill(1, 282)
+	Pmodel = a*oneaux + b*t + c*t.^2 + d*t.^3
+	res = P - Pmodel
+	nres = norm(res)
+	return nres
+end
+
+# ╔═╡ 2b784ad4-2063-4659-86e2-724b9c0be1dd
+begin
+	u0 = [0.999, 0.001, 0]
+	tspan = (0.0, 100.0)
+	local a = 0.307372
+	local b =0.0547155
+	f(S, p, t) = [-a*S[1]*S[2], a*S[1]*S[2]-S[2]*b, S[2]*b]
+	prob = ODEProblem(f, u0, tspan)
+end
+
+# ╔═╡ e4db2c67-8fae-4628-93cc-21dbf9799790
+begin
+	sol = solve(prob)
+	plot(sol)
+end
+
 # ╔═╡ b90ee4ae-61b4-4536-b30a-62dac44cbcd2
 begin
 	data = [1	0.1299765808
@@ -1397,16 +1465,6 @@ begin
 	
 end
 
-# ╔═╡ 28f39121-551e-4ecb-b857-444b84b9556a
-function residue_poly3(coefs, P, t)
-	a,b,c,d = coefs
-	oneaux = fill(1, 282)
-	Pmodel = a*oneaux + b*t + c*t.^2 + d*t.^3
-	res = P - Pmodel
-	nres = norm(res)
-	return nres
-end
-
 # ╔═╡ 15feece7-1606-4831-b4e1-6bc0c3d7eb6b
 residue2(coefs) = residue_poly3(coefs, percent, time2)
 
@@ -1415,40 +1473,6 @@ begin
 	optim_output = Optim.optimize( residue2, [.2,.02,.02,0.0001], NelderMead() ) 
 	println(optim_output.minimizer)
 	print(optim_output.minimum)
-end
-
-# ╔═╡ 184abadd-77ec-4c3b-87de-9137c7093f34
-begin
-	local ts = 1:0.1:282
-	local oneaux = fill(1,size(ts))
-	
-	oCoefs = optim_output.minimizer
-	local ys = oCoefs[1]*oneaux + oCoefs[2]*ts + oCoefs[3]*ts.^2 + oCoefs[4]*ts.^3
-	plot(ts, ys, lw=5, label="Poly3")
-	scatter!(time2, percent, 
-			ls=:dash, 
-			label="Percentage", 
-			lw=4, 
-			xlabel = "Tiempo",
-			yaxis="%",
-			legend=:topright, 
-			title="Poly3 optimal model")
-end
-
-# ╔═╡ 2b784ad4-2063-4659-86e2-724b9c0be1dd
-begin
-	u0 = [0.999, 0.001, 0]
-	tspan = (0.0, 100.0)
-	local a = 0.307372
-	local b =0.0547155
-	f(S, p, t) = [-a*S[1]*S[2], a*S[1]*S[2]-S[2]*b, S[2]*b]
-	prob = ODEProblem(f, u0, tspan)
-end
-
-# ╔═╡ e4db2c67-8fae-4628-93cc-21dbf9799790
-begin
-	sol = solve(prob)
-	plot(sol)
 end
 
 # ╔═╡ 5d703cd3-7546-4c9c-b476-bbca06eacae2
@@ -1468,11 +1492,23 @@ end
 
 
 
-# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
-md"""
-## Bibliografia
-[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
-"""
+# ╔═╡ 184abadd-77ec-4c3b-87de-9137c7093f34
+begin
+	local ts = 1:0.1:282
+	local oneaux = fill(1,size(ts))
+	
+	oCoefs = optim_output.minimizer
+	local ys = oCoefs[1]*oneaux + oCoefs[2]*ts + oCoefs[3]*ts.^2 + oCoefs[4]*ts.^3
+	plot(ts, ys, lw=5, label="Poly3")
+	scatter!(time2, percent, 
+			ls=:dash, 
+			label="Percentage", 
+			lw=4, 
+			xlabel = "Tiempo",
+			yaxis="%",
+			legend=:topright, 
+			title="Poly3 optimal model")
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -4256,7 +4292,7 @@ version = "1.4.1+1"
 # ╟─bf78cb89-7a8d-4f0c-8e11-6828b21f0216
 # ╟─9d40078f-9431-450f-8ea3-cc606ded7ff7
 # ╟─eb244701-3e09-4ced-a5e8-7bfbd26b13ca
-# ╟─902dc871-104f-4944-acfa-bfbfe060835f
+# ╠═902dc871-104f-4944-acfa-bfbfe060835f
 # ╟─899122fa-5da1-48ec-9c67-e73a304a7521
 # ╟─3600ad57-c966-4207-82f7-1fc5180ebafb
 # ╟─6c0a1e99-7db3-44fc-9662-ac516e4147fb
@@ -4269,6 +4305,22 @@ version = "1.4.1+1"
 # ╠═3703c6d2-1784-48be-9409-c3fb2df8988c
 # ╟─32efcd0b-f87c-4d87-ae70-81f8338d17e0
 # ╠═20c0a5f4-bfbb-40b5-8a4c-c8c6713bdd6b
+# ╠═264a2140-404a-4643-8ff4-17bf2a581ae0
+# ╠═dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
+# ╠═1fccab4b-1804-4c7d-b231-3d0cb1331160
+# ╠═c20ddc6b-24fb-44b7-a8f2-233e3c521961
+# ╠═d4720048-c73c-4b72-a19d-33c9d684ef43
+# ╠═67826398-1d69-45fd-a1a4-da8b4a47dcf1
+# ╠═03924f2e-0879-41f2-8528-c9339501d88f
+# ╠═2c7dd3a9-a66b-4077-ad26-9461d7ad5961
 # ╟─17150073-34f5-4975-b133-d9daf50ec820
+# ╠═28f39121-551e-4ecb-b857-444b84b9556a
+# ╠═e4db2c67-8fae-4628-93cc-21dbf9799790
+# ╠═2b784ad4-2063-4659-86e2-724b9c0be1dd
+# ╠═15feece7-1606-4831-b4e1-6bc0c3d7eb6b
+# ╠═3b54028a-8e6f-4b14-9920-f74ee0502819
+# ╠═b90ee4ae-61b4-4536-b30a-62dac44cbcd2
+# ╠═5d703cd3-7546-4c9c-b476-bbca06eacae2
+# ╠═184abadd-77ec-4c3b-87de-9137c7093f34
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
