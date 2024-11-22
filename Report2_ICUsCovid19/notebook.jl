@@ -928,112 +928,11 @@ scatter(totalTime, totalBeds,
 	legend=false,
 	xlabel = "Day",
 	yaxis="Number of ICUs", 
-	title="Occupied ICUs per day.\n From 15/05/2020 (1st) to 6/11/2024 (878th)")
+	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{15/05/2020}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 
 # ╔═╡ 3600ad57-c966-4207-82f7-1fc5180ebafb
 begin
-	data1=[
-1	0.1914438503
-2	0.2171122995
-3	0.2320855615
-4	0.2037558685
-5	0.220657277
-6	0.2178403756
-7	0.2131455399
-8	0.2216117216
-9	0.2252747253
-10	0.2435897436
-11	0.2564102564
-12	0.2766945218
-13	0.266786034
-14	0.2456597222
-15	0.2482638889
-16	0.2395833333
-17	0.2517361111
-18	0.2538726334
-19	0.2685025818
-20	0.2719449225
-21	0.2616179002
-22	0.2762478485
-23	0.2641996558
-24	0.2753872633
-25	0.2753872633
-26	0.2891360137
-27	0.2940677966
-28	0.3271186441
-29	0.3338983051
-30	0.3288135593
-31	0.343220339
-32	0.3654008439
-33	0.3542372881
-34	0.368597817
-35	0.37000815
-36	0.3626731866
-37	0.3928280359
-38	0.4083129584
-39	0.4311328443
-40	0.4286878566
-41	0.4108527132
-42	0.4457364341
-43	0.4782945736
-44	0.498825372
-45	0.5068078669
-46	0.5226928896
-47	0.5249621785
-48	0.5294117647
-49	0.5451895044
-50	0.5751633987
-51	0.5889615105
-52	0.6165577342
-53	0.6043956044
-54	0.5915208614
-55	0.6076716016
-56	0.6339165545
-57	0.6574697174
-58	0.6641991925
-59	0.7025572005
-60	0.7288021534
-61	0.6960352423
-62	0.7028985507
-63	0.6988023952
-64	0.7086801427
-65	0.7217598098
-66	0.7295373665
-67	0.7332939089
-68	0.7253121453
-69	0.7315550511
-70	0.7164261931
-71	0.7361795293
-72	0.7246852764
-73	0.7422003284
-74	0.7213903743
-75	0.7162447257
-76	0.7073552426
-77	0.7265091864
-78	0.7277459656
-79	0.7423217074
-80	0.7285861713
-81	0.7481940144
-82	0.7355035605
-83	0.7351460222
-84	0.7306143001
-85	0.7469574037
-86	0.7395418327
-87	0.7465139442
-88	0.7544820717
-89	0.737745098
-90	0.743627451
-91	0.732462506
-92	0.7256038647
-93	0.7414375301
-94	0.7216594308
-95	0.7202122528
-96	0.7062228654
-97	0.698374761
-98	0.6962750716
-99	0.6610565685
-100	0.6381486676
-	];
+	data1 = totalData[1:100,:];
 	time1 = data1[:,1];
 	beds1 = data1[:,2];
 	data1
@@ -1043,10 +942,9 @@ end
 scatter(time1, beds1, 
 	ms=3,
 	legend=false,
-	lw=10, 
 	xlabel = "Day",
 	yaxis="Number of UCIs", 
-	title="Occupied ICUs per day.\n  From 15/05/2020 (1st) to 22/08/2020 (100th)")
+	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{15/05/2020}\$ \$_{to}\$ \$_{22/08/2024}\$"))
 
 # ╔═╡ e9365433-86a5-4572-9182-652edcae8840
 md"""
@@ -1155,326 +1053,47 @@ resFab(Fun8)([400,1,0.1], totalBeds[1:end])
 # ╔═╡ 67826398-1d69-45fd-a1a4-da8b4a47dcf1
 resFab(Fun1)([0.3,0.1], totalBeds[1:20])
 
-# ╔═╡ d6dd643e-bbb9-4b50-abf2-f24d9203bb54
-optimize(Fun8, [400, 0.00001, 0.00001], totalBeds[1:50])
-
 # ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
 optimize(Fun8, [400, 0.000001, 0.000001], totalBeds)
 
 # ╔═╡ 2c7dd3a9-a66b-4077-ad26-9461d7ad5961
 optimize(Fun1, [1.1, 200], totalBeds[1:40])
 
-# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
-md"""
-## Bibliografia
-[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
-"""
+# ╔═╡ cda9d8b5-1d67-4e72-849f-ae96227770b9
+begin
+	function F3(α1, β1, γ1, α2, β2, γ2, t)
+		
+		# Neural network
+		
+	    f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
+		f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
+		return f1 .+ f2
+	end
+	optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
+end
+
+# ╔═╡ 2636b160-a4db-45d8-be32-7631483d6e57
+optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
+
+# ╔═╡ d6dd643e-bbb9-4b50-abf2-f24d9203bb54
+optimize(Fun8, [400, 0.00001, 0.00001], totalBeds[1:50])
 
 # ╔═╡ 6d2e6d25-5cf4-48a4-87ed-767255da068d
 md"""
 ## Data fitting with differential equations
 """
 
-# ╔═╡ b90ee4ae-61b4-4536-b30a-62dac44cbcd2
+# ╔═╡ 8572a08b-299e-44d8-8a2f-2b3a38e7872f
+md"""
+In this final segment, we devise a system of differential equations and use the solution to fit our data. We use the data collected starting from january the 1st, 2022. 
+"""
+
+# ╔═╡ 2b2e7a6d-3fc0-4b8e-9dc1-d05c0ad58ab9
 begin
-	data2 = [1	222
-2	209
-3	217
-4	245
-5	252
-6	278
-7	291
-8	299
-9	302
-10	292
-11	311
-12	306
-13	326
-14	332
-15	368
-16	356
-17	373
-18	397
-19	410
-20	431
-21	452
-22	467
-23	488
-24	525
-25	602
-26	581
-27	608
-28	599
-29	612
-30	618
-31	631
-32	649
-33	626
-34	651
-35	653
-36	649
-37	649
-38	671
-39	645
-40	638
-41	603
-42	603
-43	598
-44	593
-45	588
-46	592
-47	580
-48	589
-49	552
-50	535
-51	516
-52	503
-53	477
-54	472
-55	443
-56	425
-57	396
-58	397
-59	370
-60	386
-61	362
-62	351
-63	353
-64	349
-65	336
-66	334
-67	322
-68	325
-69	311
-70	282
-71	283
-72	267
-73	274
-74	286
-75	243
-76	258
-77	234
-78	248
-79	262
-80	282
-81	265
-82	266
-83	263
-84	242
-85	249
-86	241
-87	237
-88	254
-89	246
-90	253
-91	242
-92	220
-93	224
-94	231
-95	218
-96	229
-97	237
-98	229
-99	213
-100	215
-101	211
-102	216
-103	217
-104	215
-105	209
-106	204
-107	194
-108	197
-109	203
-110	188
-111	204
-112	208
-113	202
-114	197
-115	187
-116	195
-117	188
-118	190
-119	184
-120	208
-121	213
-122	186
-123	185
-124	177
-125	167
-126	180
-127	201
-128	201
-129	200
-130	210
-131	232
-132	231
-133	217
-134	219
-135	180
-136	157
-137	152
-138	135
-139	139
-140	137
-141	107
-142	104
-143	106
-144	99
-145	101
-146	107
-147	110
-148	107
-149	87
-150	84
-151	78
-152	79
-153	83
-154	98
-155	91
-156	104
-157	121
-158	97
-159	88
-160	82
-161	77
-162	79
-163	80
-164	89
-165	76
-166	92
-167	81
-168	77
-169	76
-170	78
-171	78
-172	78
-173	88
-174	81
-175	63
-176	84
-177	33
-178	78
-179	62
-180	80
-181	63
-182	83
-183	62
-184	106
-185	67
-186	75
-187	62
-188	73
-189	63
-190	65
-191	55
-192	62
-193	64
-194	69
-195	60
-196	60
-197	54
-198	50
-199	56
-200	58
-201	62
-202	55
-203	58
-204	64
-205	64
-206	64
-207	64
-208	64
-209	64
-210	64
-211	25
-212	25
-213	25
-214	25
-215	25
-216	25
-217	25
-218	55
-219	55
-220	55
-221	55
-222	55
-223	55
-224	55
-225	35
-226	46
-227	36
-228	54
-229	44
-230	51
-231	41
-232	56
-233	43
-234	43
-235	47
-236	54
-237	43
-238	53
-239	52
-240	48
-241	38
-242	32
-243	53
-244	48
-245	49
-246	45
-247	31
-248	42
-249	47
-250	45
-251	45
-252	32
-253	32
-254	34
-255	28
-256	26
-257	28
-258	37
-259	28
-260	31
-261	26
-262	32
-263	46
-264	26
-265	28
-266	36
-267	31
-268	28
-269	35
-270	17
-271	38
-272	25
-273	36
-274	32
-275	27
-276	29
-277	25
-278	28
-279	28
-280	33
-281	28
-282	24]
+	data2 = totalData[597:878,:];
 	time2 = data2[:,1];
 	beds2 = data2[:,2];
 	data2
-end
-
-# ╔═╡ cda9d8b5-1d67-4e72-849f-ae96227770b9
-begin
-	function F3(α1, β1, γ1, α2, β2, γ2, t)
-		
-		# Neural network function
-		
-	    f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
-		f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
-		return f1 .+ f2
-	end
-	optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], beds2)
 end
 
 # ╔═╡ 28f39121-551e-4ecb-b857-444b84b9556a
@@ -1487,6 +1106,41 @@ begin
 	end
 	optimize(F4, [448, 0.1, -0.02, 7], beds2)
 end
+
+# ╔═╡ 50cab6d4-3e97-4c70-bff7-796eaeb1335c
+scatter(time2, beds2, 
+	ms=3,
+	legend=false,
+	xlabel = "Day",
+	yaxis="Number of UCIs", 
+	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
+
+# ╔═╡ 2371eb1d-e17a-4e1f-90f8-72d15f56de6f
+md"""
+To set the equations, we assumed that the change in the amount of occupied UCIs across time must roughly resemble the change in the number of people infected with COVID-19 during the same period, so we decided to use a basic model for the spread of a disease in a population, a modification of the SIR model [2]. The model works with containers and the flow of samples between them. We consider 4 containers, that represent 4 populations: 
+
+- S: the number of susceptible individuals.
+- I: the number of infected individuals.
+- C: the number of individuals that recover from the infection.
+- R: the number of individuals who will not get reinfected.
+
+Introducing the container $C$ adds the scenario of an individual being infected more than once, which was a phenomenon during the spread of COVID-19. 
+
+![container_model](https://i.ibb.co/VwCzJ4m/model.png)
+
+$\scriptsize{\texttt{Figure 1. Modified SIR model.}}$
+
+The graph in figure 1 illustrates the flow between containers. For instance, in an instant of time, the change in infected individuals is a fraction: $\alpha$ of the number of possible encounters between susceptible and infected individuals (SI), minus a fraction: $\beta$, of the number of infected individuals who recover. Similarly, the change in an instant of time in the number of recovered individuals, $C$, is a fraction $\gamma$ of the number of infected individuals, minus the recovered individuals who become susceptible once again and minus a fraction $\delta$ of recovered individuals who will not get infected anymore. The system is syntehetized bellow.
+
+$\begin{cases} 
+	S' &= -\alpha SI + \delta C \\
+	I' &= \alpha SI - \beta I \\
+	C' &= \beta I - \gamma C - \delta C\\
+	R' &= \delta C
+\end{cases}$
+
+The following code defines the equation system. 
+"""
 
 # ╔═╡ 03cdba80-4b07-4ebd-b0ef-165c7e1bb084
 function modSIR(dy, y, params, t)
@@ -1501,112 +1155,61 @@ function modSIR(dy, y, params, t)
 	dy[4] = γ*C
 end
 
+# ╔═╡ 75f21695-f05a-474e-8b4f-99ff86db1c44
+md"""
+Now, we define a residue function. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the size of the population: $N=S+I+C+R$.
+"""
+	
+
 # ╔═╡ a9429257-79e8-404b-93ce-db53ca5d483b
 function residueSIR(params)
 
 	α, β, γ, δ, N = params
 
 	y0 = [N-222, 222, 0, 0]
-	tspan = (1.0, 282.0)
+	tspan = (time2[1], time2[length(time2)])
 	
     ODESIR = ODEProblem(modSIR, y0, tspan, (α, β, γ, δ))
     solSIR = solve(ODESIR)
 
-	# Take the values of I in (1, 2, ..., 282)
-    sol_I = solSIR(1:282)[2,:]
-    return( sum((sol_I - beds2) .^2) )
+    sol_I = solSIR(time2)[2,:]
+    return norm(sol_I - beds2)
 end
 
 # ╔═╡ 1f91aa8c-4bce-43d9-8a64-f52dd727b159
 function fitSIR()
+
 	
     opt = Optim.optimize(residueSIR, [1/505, 1/105, 1/108, 1/20, 1400], NelderMead())
     oα, oβ, oγ, oδ, oN = opt.minimizer
 
 	y0 = [oN-222, 222, 0, 0]
-	tspan = (1.0, 282.0)
+	tspan = (time2[1], time2[length(time2)])
+
+	# Solve DE with optimal parameters
     oODESIR = ODEProblem(modSIR, y0, tspan, (oα, oβ, oγ, oδ))
     oSolSIR = solve(oODESIR)
-	
-    plot(oSolSIR(1:282)[2,:],
-        	linewidth=5,
-            xaxis="Time in days",
-            label=["Susceptible" "Infected" "Recovered" "Removed"])
-    scatter!(time2, beds2, marker=:circle, markersize=4, label="Data")
 
+	# Plot
+	scatter(time2, beds2, marker=:circle, ms=3, label="Data")
+    plot!(time2, oSolSIR(time2)[2,:],
+        	linewidth=5,
+            xaxis="Day",
+			yaxis="Number of UCIs",
+            label="I(t)",
+			title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 end
 
 # ╔═╡ cbce2506-0a3c-4c94-ad84-79831c85869a
 fitSIR()
 
-# ╔═╡ 8572a08b-299e-44d8-8a2f-2b3a38e7872f
+# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
 md"""
-![container_model](https://i.ibb.co/VwCzJ4m/model.png)
+## Bibliography
+[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
 
-$\scriptsize{\texttt{Figure 1. How a pencil is made. [2]}}$
-
-In this final segment, we devise a system of differential equations and use the solution to fit our data. To set the equations, we assumed that the change in the amount of occupied UCIs across time must roughly resemble the change in the number of people infected with COVID-19 during the same period, so we decided to use a basic model for the spread of a disease in a population, a modification of the SIR model. The model works with containers and the flow of samples between them. We consider 4 containers, that represent 4 populations: 
-
-- $S$: the number of susceptible individuals.
-- $I$: the number of infected individuals.
-- $C$: the number of individuals that recover from the infection.
-- $R$: the number of individuals who will not get reinfected.
-
-Introducing the container $C$ adds the scenario of an individual being infected more than once, which was a phenomenon during the spread of COVID-19. The graph in figure X illustrates the flow between containers. For instance, in an instant of time, the change of infected individuals is a fraction $\alpha$ of the number of possible encounters between susceptible and infected individuals, $SI$, minus a fraction, $\beta$, of the number of infected individuals who recover.
-Similarly, the change in an instant of time in the number of recovered individuals, $C$, is a fraction $\gamma$ of the number of infected individuals, minus the recovered individuals who become susceptible once again and minus a fraction $\delta$ of recovered individuals who will not get infected anymore.
-
-The following code defines the equation system. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the total number of individuals: $N=S+I+C+R$.
-
-
-$\begin{cases} 
-	S' &= -\alpha SI + \delta C \\
-	I' &= \alpha SI - \beta I \\
-	C' &= \beta I - \gamma C - \delta C\\
-	R' &= \delta C
-\end{cases}$
+[2] Wikimedia Foundation. (2024, November 6). Compartmental models in epidemiology. Wikipedia. https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
 """
-
-# ╔═╡ 96791b69-f07c-431d-9708-5d8a1820a7b6
-function modNN(t, params)
-	
-	# modified neural network function
-    α1, β1, γ1, α2, β2, γ2 = params
-	N0 = 222
-	
-    f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
-	f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
-	return f1 .+ f2
-end
-
-# ╔═╡ 618e84c7-5258-45f5-8a1f-2c4fa6472624
-function getResidue(f, params)
-
-	# Norm 2 squared
-	predBeds = f(time2, params)
-	
-    return( sum((predBeds - beds2) .^2) )
-end
-
-# ╔═╡ d13cd024-04b8-4242-b7c8-10af9a680d2e
-function fit(f, params0)
-
-	# Fit function f with initial parameters params0
-	# Using NelderMead
-	residue(params) = getResidue(f, params)
-	
-	opt = Optim.optimize(residue, params0, NelderMead())
-    oParams = opt.minimizer
-
-	predBeds = f(time2, oParams)
-	
-    plot(time2, predBeds,
-        	linewidth=5,
-            xaxis="Time in days")
-    scatter!(time2, beds2, marker=:circle, markersize=4, label="Data")
-end
-
-# ╔═╡ 2636b160-a4db-45d8-be32-7631483d6e57
-fit(modNN, [700, 0.8, -0.07, -580, 9.9, -0.14])
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
