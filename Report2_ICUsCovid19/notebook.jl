@@ -1536,6 +1536,19 @@ md"""
 
 $\scriptsize{\texttt{Figure 1. How a pencil is made. [2]}}$
 
+In this final segment, we devise a system of differential equations and use the solution to fit our data. To set the equations, we assumed that the change in the amount of occupied UCIs across time must roughly resemble the change in the number of people infected with COVID-19 during the same period, so we decided to use a basic model for the spread of a disease in a population, a modification of the SIR model. The model works with containers and the flow of samples between them. We consider 4 containers, that represent 4 populations: 
+
+- $S$: the number of susceptible individuals.
+- $I$: the number of infected individuals.
+- $C$: the number of individuals that recover from the infection.
+- $R$: the number of individuals who will not get reinfected.
+
+Introducing the container $C$ adds the scenario of an individual being infected more than once, which was a phenomenon during the spread of COVID-19. The graph in figure X illustrates the flow between containers. For instance, in an instant of time, the change of infected individuals is a fraction $\alpha$ of the number of possible encounters between susceptible and infected individuals, $SI$, minus a fraction, $\beta$, of the number of infected individuals who recover.
+Similarly, the change in an instant of time in the number of recovered individuals, $C$, is a fraction $\gamma$ of the number of infected individuals, minus the recovered individuals who become susceptible once again and minus a fraction $\delta$ of recovered individuals who will not get infected anymore.
+
+The following code defines the equation system. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the total number of individuals: $N=S+I+C+R$.
+
+
 $\begin{cases} 
 	S' &= -\alpha SI + \delta C \\
 	I' &= \alpha SI - \beta I \\
@@ -1585,7 +1598,6 @@ end
 
 # ╔═╡ 2636b160-a4db-45d8-be32-7631483d6e57
 fit(modNN, [700, 0.8, -0.07, -580, 9.9, -0.14])
-
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
