@@ -1013,27 +1013,48 @@ end
 
 # Falta arregloar variables y revisar modelo differencial
 
-# ╔═╡ 264a2140-404a-4643-8ff4-17bf2a581ae0
-function resFab(fun)
+# ╔═╡ 21a92e4c-e763-4ebc-b1e0-42f0d47c5526
+md"""
+## Using other functions
 
-	# Returns a function that caculates the residue using norm 2
-	function res(parameters, data)
+Once we understand the concept using the cubic polynomial, we can try other types of functions. However, let's first make the previous process more systematic, so we can focus on achieving a better fit.
+
+First, we define a function that that creates the $\textbf{residue}$ function just with the function an a given norm, by defaulr quadratic norm.
+"""
+
+# ╔═╡ 264a2140-404a-4643-8ff4-17bf2a581ae0
+function residueFunGenerator(fun, norm=norm)
+
+	# Returns a function that caculates the residue using a norm (by default quadratic norm)
+	function residue(parameters, data)
 		model = [fun(parameters..., x) for x in 1:length(data)]
 		return norm(data-model)
 	end
-	return res
+	return residue
 end
 
+# ╔═╡ 8824e19a-65b1-4785-8609-bbb9eb6bf6c7
+md"""
+Additionally, let's define a function that optimizes the model and plots both the data and the fitted model. This function will accept an initial guess as well as optional parameters to slice the data if desired.
+"""
+
 # ╔═╡ dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
-function optimize(fun, guess, data, sliceFrom=nothing, sliceTo=nothing) 
+function optimize(fun, funStr, guess, data, sliceFrom=nothing, sliceTo=nothing) 
 	slicedData = data[(isnothing(sliceFrom) ? 1 : sliceFrom) : (isnothing(sliceTo) ? end : sliceTo)]
-	rPL(par) =  resFab(fun)(par, slicedData)
+	rPL(par) =  residueFunGenerator(fun)(par, slicedData)
 	oL = Optim.optimize(rPL, guess, LBFGS())
-	y = [fun(oL.minimizer..., x) for x in 1:length(slicedData)]
+	optArgs = map(x -> round(x, digits=2), oL.minimizer)
+	y = [fun(optArgs..., x) for x in 1:length(slicedData)]
+
 	
-	scatter(slicedData)
-	plot!(y, linewidth=5)
+	scatter(slicedData, label="Beds", lw=4, xlabel = "Time(Days)", yaxis="Beds", title="Optimal model $funStr with parameters: \n $(join(optArgs, ", "))")
+	plot!(y, linewidth=5, label="Model")
 end
+
+# ╔═╡ 226b5074-9240-48b3-9fcd-2bb91964867d
+md"""
+Finally, let's define several functions along with their corresponding written descriptions.
+"""
 
 # ╔═╡ c20ddc6b-24fb-44b7-a8f2-233e3c521961
 begin
@@ -1045,43 +1066,92 @@ begin
 	Fun6 = (A, B, x) -> (A*x + B)^(-2)
 	Fun7 = (C, D, x) -> C*x*exp(-D*x)
 	Fun8 = (L, C, A, x) -> L/(1+C * exp(A*x))
+	
+	Fun1Str = "A*1/x + B"
+	Fun2Str = "D/(x + C)"
+	Fun3Str = "x/(A*x + B)"
+	Fun4Str = "C*exp(A*x)"
+	Fun5Str = "C*x^A"
+	Fun6Str = "(A*x + B)^(-2)"
+	Fun7Str = "C*x*exp(-D*x)"
+	Fun8Str = "L/(1+C * exp(A*x))"
 end
 
-# ╔═╡ d4720048-c73c-4b72-a19d-33c9d684ef43
-resFab(Fun8)([400,1,0.1], totalBeds[1:end])
+# ╔═╡ 6e0a4e1d-f77a-4f5b-86fc-633c5940d0cd
+md"""
+Before calling the functions, we should obtain a good initial guess, as the optimization process can yield better or worse results depending on this starting point. To achieve this, we will aim to minimize the residual by adjusting the model to closely match the initial form of the graph.
+"""
 
 # ╔═╡ 67826398-1d69-45fd-a1a4-da8b4a47dcf1
-resFab(Fun1)([0.3,0.1], totalBeds[1:20])
+residueFunGenerator(Fun1)([1500, 900], totalBeds[1:100])
 
-# ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
-optimize(Fun8, [400, 0.000001, 0.000001], totalBeds)
+# ╔═╡ 9548de18-977c-4447-88ca-1c2830991d08
+residueFunGenerator(Fun2)([400, 0.1], totalBeds[1:100])
+
+# ╔═╡ 322cac4c-d5bd-4156-ac1b-274685892375
+residueFunGenerator(Fun3)([4, -0.1], totalBeds[1:100])
+
+# ╔═╡ d4720048-c73c-4b72-a19d-33c9d684ef43
+residueFunGenerator(Fun8)([1000, 0.0001, 0.001], totalBeds[1:49])
 
 # ╔═╡ 2c7dd3a9-a66b-4077-ad26-9461d7ad5961
-optimize(Fun1, [1.1, 200], totalBeds[1:40])
+optimize(Fun1, Fun1Str, [1500.0, 200], totalBeds, 1, 100)
 
-# ╔═╡ cda9d8b5-1d67-4e72-849f-ae96227770b9
-begin
-	function F3(α1, β1, γ1, α2, β2, γ2, t)
-		
-		# Neural network
-		
-	    f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
-		f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
-		return f1 .+ f2
-	end
-	optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
-end
+# ╔═╡ 2fbd4bf8-6461-4fd4-86be-b3c1574c50cd
+optimize(Fun2, Fun2Str, [400,0.1], totalBeds, 1, 100)
 
-# ╔═╡ 2636b160-a4db-45d8-be32-7631483d6e57
-optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
+# ╔═╡ f9312083-3fbf-4731-8366-6fdf8826fea7
+optimize(Fun3, Fun3Str, [4, -0.1], totalBeds, 1, 100)
 
-# ╔═╡ d6dd643e-bbb9-4b50-abf2-f24d9203bb54
-optimize(Fun8, [400, 0.00001, 0.00001], totalBeds[1:50])
+# ╔═╡ 075a0f3f-5ea7-4c97-9183-8afb48f3d80e
+optimize(Fun4, Fun4Str, [0.1, 0.1], totalBeds, 1, 100)
+
+# ╔═╡ 10def10c-3944-4c0a-be15-7dd732ae476c
+optimize(Fun5, Fun5Str, [0.1, 0.1], totalBeds, 1, 100)
+
+# ╔═╡ fb88b68e-3420-4247-a6bf-6bc11afa36ad
+optimize(Fun6, Fun6Str, [1, 0.1], totalBeds, 1, 100)
+
+# ╔═╡ ee9681ba-630a-4ceb-90ab-586acf34e0d1
+optimize(Fun7, Fun7Str, [500, 4.0], totalBeds, 1, 100)
+
+# ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
+optimize(Fun8, Fun8Str,[400, 0.0001, 0.001], totalBeds, 1, 49)
+
+# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
+md"""
+## Bibliography
+[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
+
+[2] Wikimedia Foundation. (2024, November 6). Compartmental models in epidemiology. Wikipedia. https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+"""
+
+# ╔═╡ 75f21695-f05a-474e-8b4f-99ff86db1c44
+md"""
+Now, we define a residue function. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the size of the population: $N=S+I+C+R$.
+"""
+	
 
 # ╔═╡ 6d2e6d25-5cf4-48a4-87ed-767255da068d
 md"""
 ## Data fitting with differential equations
 """
+
+# ╔═╡ d6dd643e-bbb9-4b50-abf2-f24d9203bb54
+optimize(Fun8, [400, 0.00001, 0.00001], totalBeds[1:50])
+
+# ╔═╡ 03cdba80-4b07-4ebd-b0ef-165c7e1bb084
+function modSIR(dy, y, params, t)
+	
+	# modified SIR equation system
+    S, I, C, R = y
+    α, β, γ, δ = params
+	
+    dy[1] = -α*S*I + δ*C
+    dy[2] = α*S*I - β*I
+    dy[3] = β*I - γ*C - δ*C
+	dy[4] = γ*C
+end
 
 # ╔═╡ 8572a08b-299e-44d8-8a2f-2b3a38e7872f
 md"""
@@ -1107,6 +1177,21 @@ begin
 	optimize(F4, [448, 0.1, -0.02, 7], beds2)
 end
 
+# ╔═╡ a9429257-79e8-404b-93ce-db53ca5d483b
+function residueSIR(params)
+
+	α, β, γ, δ, N = params
+
+	y0 = [N-222, 222, 0, 0]
+	tspan = (time2[1], time2[length(time2)])
+	
+    ODESIR = ODEProblem(modSIR, y0, tspan, (α, β, γ, δ))
+    solSIR = solve(ODESIR)
+
+    sol_I = solSIR(time2)[2,:]
+    return norm(sol_I - beds2)
+end
+
 # ╔═╡ 50cab6d4-3e97-4c70-bff7-796eaeb1335c
 scatter(time2, beds2, 
 	ms=3,
@@ -1114,6 +1199,22 @@ scatter(time2, beds2,
 	xlabel = "Day",
 	yaxis="Number of UCIs", 
 	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
+
+# ╔═╡ cda9d8b5-1d67-4e72-849f-ae96227770b9
+begin
+	function F3(α1, β1, γ1, α2, β2, γ2, t)
+		
+		# Neural network
+		
+	    f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
+		f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
+		return f1 .+ f2
+	end
+	optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
+end
+
+# ╔═╡ 2636b160-a4db-45d8-be32-7631483d6e57
+optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
 
 # ╔═╡ 2371eb1d-e17a-4e1f-90f8-72d15f56de6f
 md"""
@@ -1142,40 +1243,6 @@ $\begin{cases}
 The following code defines the equation system. 
 """
 
-# ╔═╡ 03cdba80-4b07-4ebd-b0ef-165c7e1bb084
-function modSIR(dy, y, params, t)
-	
-	# modified SIR equation system
-    S, I, C, R = y
-    α, β, γ, δ = params
-	
-    dy[1] = -α*S*I + δ*C
-    dy[2] = α*S*I - β*I
-    dy[3] = β*I - γ*C - δ*C
-	dy[4] = γ*C
-end
-
-# ╔═╡ 75f21695-f05a-474e-8b4f-99ff86db1c44
-md"""
-Now, we define a residue function. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the size of the population: $N=S+I+C+R$.
-"""
-	
-
-# ╔═╡ a9429257-79e8-404b-93ce-db53ca5d483b
-function residueSIR(params)
-
-	α, β, γ, δ, N = params
-
-	y0 = [N-222, 222, 0, 0]
-	tspan = (time2[1], time2[length(time2)])
-	
-    ODESIR = ODEProblem(modSIR, y0, tspan, (α, β, γ, δ))
-    solSIR = solve(ODESIR)
-
-    sol_I = solSIR(time2)[2,:]
-    return norm(sol_I - beds2)
-end
-
 # ╔═╡ 1f91aa8c-4bce-43d9-8a64-f52dd727b159
 function fitSIR()
 
@@ -1202,14 +1269,6 @@ end
 
 # ╔═╡ cbce2506-0a3c-4c94-ad84-79831c85869a
 fitSIR()
-
-# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
-md"""
-## Bibliography
-[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
-
-[2] Wikimedia Foundation. (2024, November 6). Compartmental models in epidemiology. Wikipedia. https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
-"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -4006,22 +4065,39 @@ version = "1.4.1+1"
 # ╠═3703c6d2-1784-48be-9409-c3fb2df8988c
 # ╟─32efcd0b-f87c-4d87-ae70-81f8338d17e0
 # ╠═20c0a5f4-bfbb-40b5-8a4c-c8c6713bdd6b
+# ╟─21a92e4c-e763-4ebc-b1e0-42f0d47c5526
 # ╠═264a2140-404a-4643-8ff4-17bf2a581ae0
+# ╟─8824e19a-65b1-4785-8609-bbb9eb6bf6c7
 # ╠═dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
-# ╠═1fccab4b-1804-4c7d-b231-3d0cb1331160
+# ╠═226b5074-9240-48b3-9fcd-2bb91964867d
 # ╠═c20ddc6b-24fb-44b7-a8f2-233e3c521961
-# ╠═d4720048-c73c-4b72-a19d-33c9d684ef43
+# ╠═6e0a4e1d-f77a-4f5b-86fc-633c5940d0cd
 # ╠═67826398-1d69-45fd-a1a4-da8b4a47dcf1
-# ╠═03924f2e-0879-41f2-8528-c9339501d88f
+# ╠═9548de18-977c-4447-88ca-1c2830991d08
+# ╠═322cac4c-d5bd-4156-ac1b-274685892375
+# ╠═d4720048-c73c-4b72-a19d-33c9d684ef43
 # ╠═2c7dd3a9-a66b-4077-ad26-9461d7ad5961
+# ╠═2fbd4bf8-6461-4fd4-86be-b3c1574c50cd
+# ╠═f9312083-3fbf-4731-8366-6fdf8826fea7
+# ╠═075a0f3f-5ea7-4c97-9183-8afb48f3d80e
+# ╠═10def10c-3944-4c0a-be15-7dd732ae476c
+# ╠═fb88b68e-3420-4247-a6bf-6bc11afa36ad
+# ╠═ee9681ba-630a-4ceb-90ab-586acf34e0d1
+# ╠═03924f2e-0879-41f2-8528-c9339501d88f
 # ╟─17150073-34f5-4975-b133-d9daf50ec820
 # ╠═28f39121-551e-4ecb-b857-444b84b9556a
-# ╠═e4db2c67-8fae-4628-93cc-21dbf9799790
-# ╠═2b784ad4-2063-4659-86e2-724b9c0be1dd
-# ╠═15feece7-1606-4831-b4e1-6bc0c3d7eb6b
-# ╠═3b54028a-8e6f-4b14-9920-f74ee0502819
-# ╠═b90ee4ae-61b4-4536-b30a-62dac44cbcd2
-# ╠═5d703cd3-7546-4c9c-b476-bbca06eacae2
-# ╠═184abadd-77ec-4c3b-87de-9137c7093f34
+# ╠═2636b160-a4db-45d8-be32-7631483d6e57
+# ╠═75f21695-f05a-474e-8b4f-99ff86db1c44
+# ╠═6d2e6d25-5cf4-48a4-87ed-767255da068d
+# ╠═a9429257-79e8-404b-93ce-db53ca5d483b
+# ╠═d6dd643e-bbb9-4b50-abf2-f24d9203bb54
+# ╠═03cdba80-4b07-4ebd-b0ef-165c7e1bb084
+# ╠═8572a08b-299e-44d8-8a2f-2b3a38e7872f
+# ╠═50cab6d4-3e97-4c70-bff7-796eaeb1335c
+# ╠═cbce2506-0a3c-4c94-ad84-79831c85869a
+# ╠═2b2e7a6d-3fc0-4b8e-9dc1-d05c0ad58ab9
+# ╠═cda9d8b5-1d67-4e72-849f-ae96227770b9
+# ╠═2371eb1d-e17a-4e1f-90f8-72d15f56de6f
+# ╠═1f91aa8c-4bce-43d9-8a64-f52dd727b159
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
