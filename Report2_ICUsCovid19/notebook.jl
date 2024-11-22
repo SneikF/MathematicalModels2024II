@@ -1127,33 +1127,42 @@ function resFab(fun)
 end
 
 # ╔═╡ dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
-function optimize(fun, guess, data) 
-	
-	rPL(par) =  resFab(fun)(par, data)
+function optimize(fun, guess, data, sliceFrom=nothing, sliceTo=nothing) 
+	slicedData = data[(isnothing(sliceFrom) ? 1 : sliceFrom) : (isnothing(sliceTo) ? end : sliceTo)]
+	rPL(par) =  resFab(fun)(par, slicedData)
 	oL = Optim.optimize(rPL, guess, LBFGS())
-	y = [fun(oL.minimizer..., x) for x in 1:length(data)]
+	y = [fun(oL.minimizer..., x) for x in 1:length(slicedData)]
 	
-	scatter(data)
+	scatter(slicedData)
 	plot!(y, linewidth=5)
 end
 
-# ╔═╡ 1fccab4b-1804-4c7d-b231-3d0cb1331160
-F1 = (L, C, A, x) -> L/(1+C * exp(A*x))
-
 # ╔═╡ c20ddc6b-24fb-44b7-a8f2-233e3c521961
-F2 = (A, B, x) -> A*1/x + B
+begin
+	Fun1 = (A, B, x) -> A*1/x + B
+	Fun2 = (D, C, x) -> D/(x + C)
+	Fun3 = (A, B, x) -> x/(A*x + B)
+	Fun4 = (A, C, x) -> C*exp(A*x)
+	Fun5 = (A, C, x) -> C*x^A
+	Fun6 = (A, B, x) -> (A*x + B)^(-2)
+	Fun7 = (C, D, x) -> C*x*exp(-D*x)
+	Fun8 = (L, C, A, x) -> L/(1+C * exp(A*x))
+end
 
 # ╔═╡ d4720048-c73c-4b72-a19d-33c9d684ef43
-resFab(F1)([0.3,0.1,0.01], totalBeds)
+resFab(Fun8)([400,1,0.1], totalBeds[1:end])
 
 # ╔═╡ 67826398-1d69-45fd-a1a4-da8b4a47dcf1
-resFab(F2)([0.3,0.1], totalBeds)
+resFab(Fun1)([0.3,0.1], totalBeds[1:20])
+
+# ╔═╡ d6dd643e-bbb9-4b50-abf2-f24d9203bb54
+optimize(Fun8, [400, 0.00001, 0.00001], totalBeds[1:50])
 
 # ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
-optimize(F1, [0.3, 0.1, 0.01], totalBeds)
+optimize(Fun8, [400, 0.000001, 0.000001], totalBeds)
 
 # ╔═╡ 2c7dd3a9-a66b-4077-ad26-9461d7ad5961
-optimize(F2, [0.3, 0.1], totalBeds)
+optimize(Fun1, [1.1, 200], totalBeds[1:40])
 
 # ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
 md"""
