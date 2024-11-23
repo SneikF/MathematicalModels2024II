@@ -39,7 +39,7 @@ The pandemic disease had many impacts on the public health systems, but it also 
 md"""
 ## Total Data Visualization
 
-This data set take the from 15/05/2020 to 6/11/2024, for each day we have a number of Occupied ICUs per day with infected patients with COVID-19
+This data set take the from 15/05/2020 to 6/11/2024, for each day we have a number of Occupied ICUs per day with infected patients with COVID-19. Along this notebook we look into different time intervals.
 
 
 """
@@ -961,15 +961,15 @@ scatter(time1, beds1,
 md"""
 ## Data fitting with a Cubic Polynomial Model
 
-Using a cubic polynomial and data set with 100 days, the model will fit the different data sets with cubic curves. The idea is take a data set from [1] and divide the interval of time (382 days from a data set with 878 days) in some subintervals (the first 100 days and last 282 days of the pandemic) and paste the distints polynomials for each interval
+Using a cubic polynomial and data set with 100 days, we fit the data sets with a cubic curve.
 
-We will use the the next form for by data set:
+Our function is:
 
 $$P(t) \approx a + bt + ct^2 + dt^3$$
 
-the idea is estimate the values $a, b, c$ and $d$. 
+we now estimate the values for the parameters $a$, $b$, $c$ and $d$. 
 
-Then, in the first step, we will use a residual function. This function will calculate the differences between the actual values of the above matrix and the values predicted by our cubic polynomial model. These calculations will use the Least Square Method.
+for this, we begin by using a residual function. This function will calculate the differences between the actual values in our set of 100 samples and the values predicted by our cubic polynomial model. These calculations will use the Least Square Method to get a curve generally close to our data.
 """
 
 # ╔═╡ 6b0a88a3-60f2-4c35-9342-437f200b474c
@@ -984,7 +984,7 @@ end
 
 # ╔═╡ ea857c36-562f-441c-8f1f-f775d1609c72
 md"""
-Now, we will use Optimization Library: Optim, and we define a function $rCP(value)$ that depends only the values $a, b, c$ and $d$, the idea is use the $\textit{optimize}$ command for to optimize the values based on the $rCP$ function.
+Now, we aid ourselves with the optimization library: Optim, and we define a function $rCP(value)$ that depends only the values parameters $a, b, c$ and $d$ that will generate the a low residue value.
 """
 
 # ╔═╡ 3d3fa345-114d-4685-b9d8-1a382f5e2e32
@@ -992,7 +992,7 @@ rCP(params) = residueCP(params, beds1, time1)
 
 # ╔═╡ 00a5d421-39a9-4e19-ac90-4fbdb4da4a22
 md"""
-Then, we optimize the values with $\textit{optimize}$ command:
+The next line executes the optimization:
 """
 
 # ╔═╡ 7ddb6ac2-5e41-4e60-8efe-0d54dff589ad
