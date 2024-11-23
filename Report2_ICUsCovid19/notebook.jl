@@ -4,7 +4,13 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 9138706e-2d61-4660-849d-c1c985c6fe8e
+# ╔═╡ aa878939-243f-443e-a793-9e7700f52b93
+using Markdown
+
+# ╔═╡ 702ab933-47ca-4855-8e5f-792a614134f0
+using InteractiveUtils
+
+# ╔═╡ 78442f71-d06f-4c3d-b225-23e4e3d009a1
 begin
 	using Plots, LinearAlgebra, Optim, DifferentialEquations
 	using PlutoUI
@@ -12,32 +18,33 @@ begin
 	using LaTeXStrings
 end
 
-# ╔═╡ 54ab848e-6c86-4eda-94c3-d8e6ce6c4ac9
+# ╔═╡ bd454543-f95b-479d-b920-d741a4a7bbd6
 PlutoUI.TableOfContents(title="Report 2 - IUCs in the Coronavirus disease", aside=true)
 
-# ╔═╡ bf78cb89-7a8d-4f0c-8e11-6828b21f0216
+# ╔═╡ 7197a91e-a93e-4b3c-85e1-fef28081d538
 md"""
 How many ICUs were used during COVID-19 in some IPSs from Colombia?
 ==============
 """
 
-# ╔═╡ 9d40078f-9431-450f-8ea3-cc606ded7ff7
-md"""
-## Background
 
-The pandemic disease had many impacts in the public health systems, and the mathematical models has had an important role in questions like: Which strategies will prevent infections in the poblation (we could have assumptions with a predictive model)? How do we decide the ICUs occupation, who should have priority?. These and others questions could be resolve with the help of a matehmatical model. Then the idea is, with a data set [1], propose a model with relations between the evolution and the ICUs occupation, this model will have information about the evolution in future pandemics with similar behaviors.       
+# ╔═╡ b328f953-516a-4b6a-b211-2e342f1a4689
+md"""
+## Motivation
+
+The pandemic disease had many impacts on the public health systems, but it also shed some light on the mathematical tools we possess to formulate predictions, and try to answer questions like: What strategies will have the greatest impact on the infection rate of the disease? How wide will the spread of the virus be in the future? What are the material and human resources required to address an infection outbreak? These and other questions lay a wide landscape to explore with the help of mathematical models. In this delivery, we consider a data set that provides the number of occupied UCIs reported by IPSs in Bogotá due to COVID-19, from 15/5/2020 to 6/11/2024 [1]. We propose fitting a model that will give us some insights into the relationships between the evolution of the spread and the ICUs' occupation, and some educated guesses on the behavior of future pandemics.
 """
 
-# ╔═╡ eb244701-3e09-4ced-a5e8-7bfbd26b13ca
+# ╔═╡ 026da94c-b115-45f6-a4b6-2b0463be64e9
 md"""
 ## Total Data Visualization
 
-This data set take the from 15/05/2020 to 6/11/2024, for each day we have a percentage of ICUs occupied with infected patients with COVID-19
+This data set take the from 15/05/2020 to 6/11/2024, for each day we have a number of Occupied ICUs per day with infected patients with COVID-19
 
 
 """
 
-# ╔═╡ 902dc871-104f-4944-acfa-bfbfe060835f
+# ╔═╡ ab7e698b-a1f7-46f0-953c-6d96dcb4707b
 begin
 	totalData=[1	179
 2	203
@@ -922,7 +929,8 @@ begin
 	totalData
 end
 
-# ╔═╡ 899122fa-5da1-48ec-9c67-e73a304a7521
+
+# ╔═╡ 5d9ec6a3-08df-47ca-80ff-7a9bb8ac2014
 scatter(totalTime, totalBeds, 
 	ls=:dash,
 	ms=2, 
@@ -931,7 +939,8 @@ scatter(totalTime, totalBeds,
 	yaxis="Number of ICUs", 
 	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{15/05/2020}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 
-# ╔═╡ 3600ad57-c966-4207-82f7-1fc5180ebafb
+
+# ╔═╡ 32f5ad50-2a68-40ec-8bfb-9a191fa85d15
 begin
 	data1 = totalData[1:100,:];
 	time1 = data1[:,1];
@@ -939,7 +948,7 @@ begin
 	data1
 end
 
-# ╔═╡ 6c0a1e99-7db3-44fc-9662-ac516e4147fb
+# ╔═╡ dbf0cf56-3544-4a36-af0c-57f7dec0eda2
 scatter(time1, beds1, 
 	ms=3,
 	legend=false,
@@ -947,7 +956,8 @@ scatter(time1, beds1,
 	yaxis="Number of UCIs", 
 	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{15/05/2020}\$ \$_{to}\$ \$_{22/08/2024}\$"))
 
-# ╔═╡ e9365433-86a5-4572-9182-652edcae8840
+
+# ╔═╡ ba9b043b-579a-4e2e-b2cd-9a134c30d6ca
 md"""
 ## Data fitting with a Cubic Polynomial Model
 
@@ -962,7 +972,7 @@ the idea is estimate the values $a, b, c$ and $d$.
 Then, in the first step, we will use a residual function. This function will calculate the differences between the actual values of the above matrix and the values predicted by our cubic polynomial model. These calculations will use the Least Square Method.
 """
 
-# ╔═╡ 69ade80b-4cd1-4c47-9942-b20a912767a4
+# ╔═╡ 6b0a88a3-60f2-4c35-9342-437f200b474c
 function residueCP(value, P, t)
 	a,b,c,d = value
 	oneaux = fill(1,100)
@@ -972,35 +982,35 @@ function residueCP(value, P, t)
 	return nres
 end
 
-# ╔═╡ eed8ac07-1a58-4a8f-b009-0f66a6739161
+# ╔═╡ ea857c36-562f-441c-8f1f-f775d1609c72
 md"""
 Now, we will use Optimization Library: Optim, and we define a function $rCP(value)$ that depends only the values $a, b, c$ and $d$, the idea is use the $\textit{optimize}$ command for to optimize the values based on the $rCP$ function.
 """
 
-# ╔═╡ 6d3680fa-0b5c-4697-8f5b-837a6013e507
+# ╔═╡ 3d3fa345-114d-4685-b9d8-1a382f5e2e32
 rCP(params) = residueCP(params, beds1, time1)
 
-# ╔═╡ a1ad4b9e-f078-466d-a11d-fbe3bd7c9028
+# ╔═╡ 00a5d421-39a9-4e19-ac90-4fbdb4da4a22
 md"""
 Then, we optimize the values with $\textit{optimize}$ command:
 """
 
-# ╔═╡ bf2b20e2-83cb-4f4d-a80e-783259790427
+# ╔═╡ 7ddb6ac2-5e41-4e60-8efe-0d54dff589ad
 oC = Optim.optimize(rCP, [.2,.02,.02,0.0001], NelderMead() )
 
-# ╔═╡ 3703c6d2-1784-48be-9409-c3fb2df8988c
+# ╔═╡ 9dc4524e-c74f-4969-a311-43277e1c3b0a
 oC.minimizer
 
-# ╔═╡ 32efcd0b-f87c-4d87-ae70-81f8338d17e0
+# ╔═╡ d5c08437-98b0-4365-9054-95901cc3e319
 md"""
 With the Nelder-Mead Algorithm the nearby cubic polynomial by our data set is:  
 
-$V(t)=0.232005 - 0.00427822t +  0.000346368t^2 - 2.62486e^{-6} t^3$
+$V(t)=322.338 - 17.1368t +  0.799665t^2 - 0.0051596 t^3$
 
-And the following graph show us the cubic polynomial model versus our data set 
+And the following graph shows the cubic polynomial model versus our data set. 
 """
 
-# ╔═╡ 20c0a5f4-bfbb-40b5-8a4c-c8c6713bdd6b
+# ╔═╡ 193a4586-72b4-407d-884d-c3abdd2c7f5d
 begin
 	ts=1:1:100
 	oneaux=fill(1,size(ts))
@@ -1008,22 +1018,20 @@ begin
 	oneaux = fill(1,size(time1))
 	PercentageCP = omC[1]*oneaux + omC[2]*ts + omC[3]*ts.^2 + omC[4]*ts.^3
 	plot(ts, PercentageCP, lw=5, label="Optimal Cubic Polynomial")
-	scatter!(time1, beds1, ls=:dash, label="Percentage", lw=4, xlabel = "Time(Days)", yaxis="Percentage", legend=:bottomright, title="Optimal Cubic Polynomial Model")
+	scatter!(time1, beds1, ls=:dash, label="Occupied ICUs per day", lw=4, xlabel = "Time(Days)", yaxis="Occupied ICUs per day", legend=:bottomright, title="Optimal Cubic Polynomial Model")
 end
 
-
-# Falta arregloar variables y revisar modelo differencial
-
-# ╔═╡ 21a92e4c-e763-4ebc-b1e0-42f0d47c5526
+# ╔═╡ 9fedd964-ca40-43de-96db-3aa41d27eef5
 md"""
 ## Using other functions
 
 Once we understand the concept using the cubic polynomial, we can try other types of functions. However, let's first make the previous process more systematic, so we can focus on achieving a better fit.
 
-First, we define a function that that creates the $\textbf{residue}$ function just with the function an a given norm, by defaulr quadratic norm.
+First, we define a function that creates the $\textbf{residue}$ function just with the function an a given norm, by defaulr quadratic norm.
 """
 
-# ╔═╡ 264a2140-404a-4643-8ff4-17bf2a581ae0
+
+# ╔═╡ 4c104d9e-b5d9-441c-8a2e-38c18870014e
 function residueFunGenerator(fun, norm=norm)
 
 	# Returns a function that caculates the residue using a norm (by default quadratic norm)
@@ -1034,12 +1042,13 @@ function residueFunGenerator(fun, norm=norm)
 	return residue
 end
 
-# ╔═╡ 8824e19a-65b1-4785-8609-bbb9eb6bf6c7
+# ╔═╡ c9e29a16-1c5e-4e5e-a311-7c7ace8880a9
 md"""
 Additionally, let's define a function that optimizes the model and plots both the data and the fitted model. This function will accept an initial guess as well as optional parameters to slice the data if desired.
 """
 
-# ╔═╡ dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
+
+# ╔═╡ bf6b2fde-6e77-4c25-acc2-eb3475890fcb
 function optimize(fun, funStr, guess, data, sliceFrom=nothing, sliceTo=nothing) 
 	slicedData = data[(isnothing(sliceFrom) ? 1 : sliceFrom) : (isnothing(sliceTo) ? end : sliceTo)]
 	rPL(par) =  residueFunGenerator(fun)(par, slicedData)
@@ -1052,12 +1061,12 @@ function optimize(fun, funStr, guess, data, sliceFrom=nothing, sliceTo=nothing)
 	plot!(y, linewidth=5, label="Model")
 end
 
-# ╔═╡ 226b5074-9240-48b3-9fcd-2bb91964867d
+# ╔═╡ 820bf40e-d35e-41f7-8dab-850283b02084
 md"""
 Finally, let's define several functions along with their corresponding written descriptions.
 """
 
-# ╔═╡ c20ddc6b-24fb-44b7-a8f2-233e3c521961
+# ╔═╡ 652058c5-375b-42cc-9410-50a5337b0c2a
 begin
 	Fun1 = (A, B, x) -> A*1/x + B
 	Fun2 = (D, C, x) -> D/(x + C)
@@ -1078,58 +1087,58 @@ begin
 	Fun8Str = "L/(1+C * exp(A*x))"
 end
 
-# ╔═╡ 6e0a4e1d-f77a-4f5b-86fc-633c5940d0cd
+# ╔═╡ e540dab3-2a8e-4ae4-90c9-de3069734524
 md"""
 Before calling the functions, we should obtain a good initial guess, as the optimization process can yield better or worse results depending on this starting point. To achieve this, we will aim to minimize the residual by adjusting the model to closely match the initial form of the graph.
 """
 
-# ╔═╡ 67826398-1d69-45fd-a1a4-da8b4a47dcf1
+# ╔═╡ 778854a8-bb3d-47c5-bed8-855e24999588
 residueFunGenerator(Fun1)([1500, 900], totalBeds[1:100])
 
-# ╔═╡ 9548de18-977c-4447-88ca-1c2830991d08
+# ╔═╡ 3c5269c8-8ee9-4f77-adf1-a11c7dc9eeff
 residueFunGenerator(Fun2)([400, 0.1], totalBeds[1:100])
 
-# ╔═╡ 322cac4c-d5bd-4156-ac1b-274685892375
+# ╔═╡ 30d08d29-17c9-41f4-8611-5d25d43e2683
 residueFunGenerator(Fun3)([4, -0.1], totalBeds[1:100])
 
-# ╔═╡ d4720048-c73c-4b72-a19d-33c9d684ef43
+# ╔═╡ 3075272c-b5e3-40ef-8b3b-a5090d2b328e
 residueFunGenerator(Fun8)([1000, 0.0001, 0.001], totalBeds[1:49])
 
-# ╔═╡ 2c7dd3a9-a66b-4077-ad26-9461d7ad5961
+# ╔═╡ ea089d62-8474-4a20-92b7-40e097a6de20
 optimize(Fun1, Fun1Str, [1500.0, 200], totalBeds, 1, 100)
 
-# ╔═╡ 2fbd4bf8-6461-4fd4-86be-b3c1574c50cd
+# ╔═╡ ded587c6-2a8f-43e3-b247-45801196d058
 optimize(Fun2, Fun2Str, [400,0.1], totalBeds, 1, 100)
 
-# ╔═╡ f9312083-3fbf-4731-8366-6fdf8826fea7
+# ╔═╡ ec7d69cf-10bf-4f94-b55e-acbfb850f526
 optimize(Fun3, Fun3Str, [4, -0.1], totalBeds, 1, 100)
 
-# ╔═╡ 075a0f3f-5ea7-4c97-9183-8afb48f3d80e
+# ╔═╡ 793dd999-e8d8-449b-83af-dbcdc70a47df
 optimize(Fun4, Fun4Str, [0.1, 0.1], totalBeds, 1, 100)
 
-# ╔═╡ 10def10c-3944-4c0a-be15-7dd732ae476c
+# ╔═╡ 268d129f-444b-4c16-aaef-8e08d6b50674
 optimize(Fun5, Fun5Str, [0.1, 0.1], totalBeds, 1, 100)
 
-# ╔═╡ fb88b68e-3420-4247-a6bf-6bc11afa36ad
+# ╔═╡ 5a02900c-bfa6-48e8-ae9d-6d668ea6f398
 optimize(Fun6, Fun6Str, [1, 0.1], totalBeds, 1, 100)
 
-# ╔═╡ ee9681ba-630a-4ceb-90ab-586acf34e0d1
+# ╔═╡ a4443b10-f34d-4a7a-a7e9-0aab51f36b92
 optimize(Fun7, Fun7Str, [500, 4.0], totalBeds, 1, 100)
 
-# ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
+# ╔═╡ 27eb838e-9e54-49a2-b475-767cb63f4ca3
 optimize(Fun8, Fun8Str,[400, 0.0001, 0.001], totalBeds, 1, 49)
 
-# ╔═╡ 677ddc22-51f4-471c-b83a-a1e76e792ebe
+# ╔═╡ 4d661cc1-cda0-41d8-b79f-3523befa042a
 md"""
 ## Data fitting with differential equations
 """
 
-# ╔═╡ 9a6ad694-cacc-440b-86d2-e5e2b40b88b5
+# ╔═╡ a363156b-8222-4e7d-949d-42beb9b4cc55
 md"""
 In this final segment, we devise a system of differential equations and use the solution to fit our data. We use the data collected starting from january the 1st, 2022. 
 """
 
-# ╔═╡ 15430101-7efb-4849-8fcb-67f33550f244
+# ╔═╡ 4a19e055-6be8-4791-89ab-48d828c4f9b9
 begin
 	data2 = totalData[597:878,:];
 	time2 = data2[:,1];
@@ -1137,7 +1146,7 @@ begin
 	data2
 end
 
-# ╔═╡ f868a194-0805-4484-8609-70f505c1f2de
+# ╔═╡ daac2bc6-c18f-465b-b9c6-1d90523dac65
 scatter(time2, beds2, 
 	ms=3,
 	legend=false,
@@ -1145,12 +1154,13 @@ scatter(time2, beds2,
 	yaxis="Number of UCIs", 
 	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 
-# ╔═╡ 9b3f1190-4e27-416b-a368-bd4e257e815e
+
+# ╔═╡ d7f546fc-8ea6-4761-918b-197fd0c31a5f
 md"""
 Functions like 2nd degree polynomial are not enough to express the nature of our data, a shown below.
 """
 
-# ╔═╡ 48e38d8b-14d5-426c-9bf7-983fa5b34b54
+# ╔═╡ 5ae153ed-5003-48a1-81fb-69b515215307
 begin
 	function getResidue(f, params)
 	
@@ -1188,15 +1198,15 @@ begin
 	end
 end
 
-# ╔═╡ c26c1773-c559-4cb1-8131-1d27f931fda1
+# ╔═╡ 6dc36d48-e38d-44f1-811e-15098fd2042c
 fit(poly_2, [7, 0.8, -0.07])
 
-# ╔═╡ a523723d-1f04-4c8f-b055-a5bc183e753b
+# ╔═╡ 68a41d7a-0625-45f5-ac7e-5842a4c13078
 md"""
 Fitting with higher degree polynomials is costly and finding meaning in the parameters is not a straigh forward task. Next, we display a fitting done using a small neural network. The curve gets closer to our data, but is still hard to contextualize our parameters.
 """
 
-# ╔═╡ 3d04e8b0-2991-4022-9916-7bb29accc3c0
+# ╔═╡ 651804a7-0c00-4388-b5f9-4f5f194c5902
 begin
 	function NN(t, params)
 	
@@ -1210,7 +1220,7 @@ begin
 	fit(NN, [700, 0.1, -61, -350, 1.5, -900])
 end
 
-# ╔═╡ 6392c8c1-3b8d-4a60-ba03-0440d89dba06
+# ╔═╡ b27ca08a-2565-4ede-a0f2-290397184139
 md"""
 Now we present an approach using differential equations. To set the equations, we assumed that the change in the amount of occupied UCIs across time must roughly resemble the change in the number of people infected with COVID-19 during the same period, so we decided to use a basic model for the spread of a disease in a population, a modification of the SIR model [2]. The model works with containers and the flow of samples between them. We consider 4 containers, that represent 4 populations: 
 
@@ -1237,7 +1247,7 @@ $\begin{cases}
 The following code defines the equation system. 
 """
 
-# ╔═╡ b445a05b-cbcf-4267-9c6a-7f77eb622114
+# ╔═╡ 07020dd5-5f57-405d-baf4-25ed2c88b313
 function modSIR(dy, y, params, t)
 	
 	# modified SIR equation system
@@ -1250,12 +1260,12 @@ function modSIR(dy, y, params, t)
 	dy[4] = γ*C
 end
 
-# ╔═╡ 3cf68784-fc86-4cde-97b6-71ad83046703
+# ╔═╡ 009da200-0ff1-42e8-912b-0c9b8d0afefc
 md"""
 Now, we define a residue function. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the size of the population: $N=S+I+C+R$. All the parameters should be a real number between $0$ and $1$, and $\gamma + \delta$ must be at most $1$, since both are a fraction of $C$ under the same instant of time.
 """
 
-# ╔═╡ 62232804-851e-4db3-88e4-e4e52331402c
+# ╔═╡ eeac7a46-b240-4e9f-8527-3d5d280b320f
 function residueSIR(params)
 
 	α, β, γ, δ, N = params
@@ -1270,12 +1280,12 @@ function residueSIR(params)
     return norm(sol_I - beds2)
 end
 
-# ╔═╡ 3568baf7-2499-4a22-9d69-5d3290506f2f
+# ╔═╡ 3a201a7b-8820-4b35-b8f7-5158300058bc
 md"""
 Finally, we let Julia take care of the optimization
 """
 
-# ╔═╡ 2999a100-395b-400f-88a7-608385266914
+# ╔═╡ 067c3057-c551-4f83-8e49-ba78d673ed67
 function fitSIR()
 
     opt = Optim.optimize(residueSIR, [1/505, 1/105, 1/108, 1/20, 1400], NelderMead())
@@ -1300,14 +1310,21 @@ function fitSIR()
 			title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 end
 
-# ╔═╡ 8963c871-18e3-4ad6-8e02-13008ab95f7c
+# ╔═╡ 7041c073-14b2-41f9-b5bb-9ec3c98b0d6d
 fitSIR()
 
-# ╔═╡ 2a41b82f-e838-4921-b908-795772abf0b6
+# ╔═╡ 63af2dd2-b3da-46f6-a98b-d96d7aa4d557
 md"""From these resulting parameters, we could entertain the idea that for a simple viral infection, whose infected victim population looks like that of our data, the total population would be around $4100$ individuals.
 """
 
-# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
+# ╔═╡ 39b3e133-702f-4def-9ab4-aa735313828f
+md"""
+## Conclusions
+
+During the development of this notebook, we experienced how the way we adjust our data set with different curves and equations was dependent on our objectives, the purpose of the fitting, and the data sample topology. In the above examples, we witnessed curves that fitted our data very well when a reduced interval of time was taken, as was the case with the 3rd degree polynomial. On the other hand, we looked at more complex behaviour, namely, the data we considered nearing the end of the notebook, the best fitting where obtained from using a very expressive function, like that of the neural network, be it with a loss in parameter significance, and the device of a differential equation model that accounted for the context our data was created in, altough in a coarse way.
+"""
+
+# ╔═╡ 6ea27cb4-67f8-44f7-b746-a75783e58093
 md"""
 ## Bibliography
 [1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
@@ -1320,7 +1337,10 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
 Optim = "429524aa-4258-5aef-a3af-852621145aeb"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
@@ -1328,6 +1348,7 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 [compat]
 DifferentialEquations = "~7.14.0"
 HypertextLiteral = "~0.9.5"
+LaTeXStrings = "~1.4.0"
 Optim = "~1.9.4"
 Plots = "~1.40.8"
 PlutoUI = "~0.7.60"
@@ -1339,7 +1360,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.11.1"
 manifest_format = "2.0"
-project_hash = "81c36ff9810f86b43a2fb4b9c65d3a84a2dd2958"
+project_hash = "71af8c499178d13af52932a09f8463678d3b093a"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "eea5d80188827b35333801ef97a40c2ed653b081"
@@ -4092,57 +4113,63 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─54ab848e-6c86-4eda-94c3-d8e6ce6c4ac9
-# ╟─9138706e-2d61-4660-849d-c1c985c6fe8e
-# ╟─bf78cb89-7a8d-4f0c-8e11-6828b21f0216
-# ╟─9d40078f-9431-450f-8ea3-cc606ded7ff7
-# ╟─eb244701-3e09-4ced-a5e8-7bfbd26b13ca
-# ╠═902dc871-104f-4944-acfa-bfbfe060835f
-# ╟─899122fa-5da1-48ec-9c67-e73a304a7521
-# ╟─3600ad57-c966-4207-82f7-1fc5180ebafb
-# ╟─6c0a1e99-7db3-44fc-9662-ac516e4147fb
-# ╟─e9365433-86a5-4572-9182-652edcae8840
-# ╠═69ade80b-4cd1-4c47-9942-b20a912767a4
-# ╟─eed8ac07-1a58-4a8f-b009-0f66a6739161
-# ╠═6d3680fa-0b5c-4697-8f5b-837a6013e507
-# ╟─a1ad4b9e-f078-466d-a11d-fbe3bd7c9028
-# ╠═bf2b20e2-83cb-4f4d-a80e-783259790427
-# ╠═3703c6d2-1784-48be-9409-c3fb2df8988c
-# ╟─32efcd0b-f87c-4d87-ae70-81f8338d17e0
-# ╠═20c0a5f4-bfbb-40b5-8a4c-c8c6713bdd6b
-# ╟─21a92e4c-e763-4ebc-b1e0-42f0d47c5526
-# ╠═264a2140-404a-4643-8ff4-17bf2a581ae0
-# ╟─8824e19a-65b1-4785-8609-bbb9eb6bf6c7
-# ╠═dfd0ac0f-e5e6-4355-8c88-2bf2cac6cd33
-# ╠═226b5074-9240-48b3-9fcd-2bb91964867d
-# ╠═c20ddc6b-24fb-44b7-a8f2-233e3c521961
-# ╠═6e0a4e1d-f77a-4f5b-86fc-633c5940d0cd
-# ╠═67826398-1d69-45fd-a1a4-da8b4a47dcf1
-# ╠═9548de18-977c-4447-88ca-1c2830991d08
-# ╠═322cac4c-d5bd-4156-ac1b-274685892375
-# ╠═d4720048-c73c-4b72-a19d-33c9d684ef43
-# ╠═2c7dd3a9-a66b-4077-ad26-9461d7ad5961
-# ╠═2fbd4bf8-6461-4fd4-86be-b3c1574c50cd
-# ╠═f9312083-3fbf-4731-8366-6fdf8826fea7
-# ╠═075a0f3f-5ea7-4c97-9183-8afb48f3d80e
-# ╠═10def10c-3944-4c0a-be15-7dd732ae476c
-# ╠═fb88b68e-3420-4247-a6bf-6bc11afa36ad
-# ╠═ee9681ba-630a-4ceb-90ab-586acf34e0d1
-# ╠═03924f2e-0879-41f2-8528-c9339501d88f
-# ╟─17150073-34f5-4975-b133-d9daf50ec820
-# ╠═28f39121-551e-4ecb-b857-444b84b9556a
-# ╠═2636b160-a4db-45d8-be32-7631483d6e57
-# ╠═75f21695-f05a-474e-8b4f-99ff86db1c44
-# ╠═6d2e6d25-5cf4-48a4-87ed-767255da068d
-# ╠═a9429257-79e8-404b-93ce-db53ca5d483b
-# ╠═d6dd643e-bbb9-4b50-abf2-f24d9203bb54
-# ╠═03cdba80-4b07-4ebd-b0ef-165c7e1bb084
-# ╠═8572a08b-299e-44d8-8a2f-2b3a38e7872f
-# ╠═50cab6d4-3e97-4c70-bff7-796eaeb1335c
-# ╠═cbce2506-0a3c-4c94-ad84-79831c85869a
-# ╠═2b2e7a6d-3fc0-4b8e-9dc1-d05c0ad58ab9
-# ╠═cda9d8b5-1d67-4e72-849f-ae96227770b9
-# ╠═2371eb1d-e17a-4e1f-90f8-72d15f56de6f
-# ╠═1f91aa8c-4bce-43d9-8a64-f52dd727b159
+# ╠═aa878939-243f-443e-a793-9e7700f52b93
+# ╠═702ab933-47ca-4855-8e5f-792a614134f0
+# ╠═78442f71-d06f-4c3d-b225-23e4e3d009a1
+# ╠═bd454543-f95b-479d-b920-d741a4a7bbd6
+# ╟─7197a91e-a93e-4b3c-85e1-fef28081d538
+# ╟─b328f953-516a-4b6a-b211-2e342f1a4689
+# ╟─026da94c-b115-45f6-a4b6-2b0463be64e9
+# ╟─ab7e698b-a1f7-46f0-953c-6d96dcb4707b
+# ╠═5d9ec6a3-08df-47ca-80ff-7a9bb8ac2014
+# ╠═32f5ad50-2a68-40ec-8bfb-9a191fa85d15
+# ╠═dbf0cf56-3544-4a36-af0c-57f7dec0eda2
+# ╟─ba9b043b-579a-4e2e-b2cd-9a134c30d6ca
+# ╠═6b0a88a3-60f2-4c35-9342-437f200b474c
+# ╟─ea857c36-562f-441c-8f1f-f775d1609c72
+# ╠═3d3fa345-114d-4685-b9d8-1a382f5e2e32
+# ╟─00a5d421-39a9-4e19-ac90-4fbdb4da4a22
+# ╠═7ddb6ac2-5e41-4e60-8efe-0d54dff589ad
+# ╠═9dc4524e-c74f-4969-a311-43277e1c3b0a
+# ╟─d5c08437-98b0-4365-9054-95901cc3e319
+# ╠═193a4586-72b4-407d-884d-c3abdd2c7f5d
+# ╟─9fedd964-ca40-43de-96db-3aa41d27eef5
+# ╠═4c104d9e-b5d9-441c-8a2e-38c18870014e
+# ╟─c9e29a16-1c5e-4e5e-a311-7c7ace8880a9
+# ╠═bf6b2fde-6e77-4c25-acc2-eb3475890fcb
+# ╟─820bf40e-d35e-41f7-8dab-850283b02084
+# ╠═652058c5-375b-42cc-9410-50a5337b0c2a
+# ╟─e540dab3-2a8e-4ae4-90c9-de3069734524
+# ╠═778854a8-bb3d-47c5-bed8-855e24999588
+# ╠═3c5269c8-8ee9-4f77-adf1-a11c7dc9eeff
+# ╠═30d08d29-17c9-41f4-8611-5d25d43e2683
+# ╠═3075272c-b5e3-40ef-8b3b-a5090d2b328e
+# ╠═ea089d62-8474-4a20-92b7-40e097a6de20
+# ╠═ded587c6-2a8f-43e3-b247-45801196d058
+# ╠═ec7d69cf-10bf-4f94-b55e-acbfb850f526
+# ╠═793dd999-e8d8-449b-83af-dbcdc70a47df
+# ╠═268d129f-444b-4c16-aaef-8e08d6b50674
+# ╠═5a02900c-bfa6-48e8-ae9d-6d668ea6f398
+# ╠═a4443b10-f34d-4a7a-a7e9-0aab51f36b92
+# ╠═27eb838e-9e54-49a2-b475-767cb63f4ca3
+# ╟─4d661cc1-cda0-41d8-b79f-3523befa042a
+# ╟─a363156b-8222-4e7d-949d-42beb9b4cc55
+# ╠═4a19e055-6be8-4791-89ab-48d828c4f9b9
+# ╠═daac2bc6-c18f-465b-b9c6-1d90523dac65
+# ╟─d7f546fc-8ea6-4761-918b-197fd0c31a5f
+# ╠═5ae153ed-5003-48a1-81fb-69b515215307
+# ╠═6dc36d48-e38d-44f1-811e-15098fd2042c
+# ╟─68a41d7a-0625-45f5-ac7e-5842a4c13078
+# ╠═651804a7-0c00-4388-b5f9-4f5f194c5902
+# ╟─b27ca08a-2565-4ede-a0f2-290397184139
+# ╠═07020dd5-5f57-405d-baf4-25ed2c88b313
+# ╟─009da200-0ff1-42e8-912b-0c9b8d0afefc
+# ╠═eeac7a46-b240-4e9f-8527-3d5d280b320f
+# ╟─3a201a7b-8820-4b35-b8f7-5158300058bc
+# ╠═067c3057-c551-4f83-8e49-ba78d673ed67
+# ╠═7041c073-14b2-41f9-b5bb-9ec3c98b0d6d
+# ╟─63af2dd2-b3da-46f6-a98b-d96d7aa4d557
+# ╟─39b3e133-702f-4def-9ab4-aa735313828f
+# ╟─6ea27cb4-67f8-44f7-b746-a75783e58093
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
