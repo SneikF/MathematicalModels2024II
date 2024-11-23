@@ -9,6 +9,7 @@ begin
 	using Plots, LinearAlgebra, Optim, DifferentialEquations
 	using PlutoUI
 	using HypertextLiteral
+	using LaTeXStrings
 end
 
 # ╔═╡ 54ab848e-6c86-4eda-94c3-d8e6ce6c4ac9
@@ -1118,47 +1119,17 @@ optimize(Fun7, Fun7Str, [500, 4.0], totalBeds, 1, 100)
 # ╔═╡ 03924f2e-0879-41f2-8528-c9339501d88f
 optimize(Fun8, Fun8Str,[400, 0.0001, 0.001], totalBeds, 1, 49)
 
-# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
-md"""
-## Bibliography
-[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
-
-[2] Wikimedia Foundation. (2024, November 6). Compartmental models in epidemiology. Wikipedia. https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
-"""
-
-# ╔═╡ 75f21695-f05a-474e-8b4f-99ff86db1c44
-md"""
-Now, we define a residue function. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the size of the population: $N=S+I+C+R$.
-"""
-	
-
-# ╔═╡ 6d2e6d25-5cf4-48a4-87ed-767255da068d
+# ╔═╡ 677ddc22-51f4-471c-b83a-a1e76e792ebe
 md"""
 ## Data fitting with differential equations
 """
 
-# ╔═╡ d6dd643e-bbb9-4b50-abf2-f24d9203bb54
-optimize(Fun8, [400, 0.00001, 0.00001], totalBeds[1:50])
-
-# ╔═╡ 03cdba80-4b07-4ebd-b0ef-165c7e1bb084
-function modSIR(dy, y, params, t)
-	
-	# modified SIR equation system
-    S, I, C, R = y
-    α, β, γ, δ = params
-	
-    dy[1] = -α*S*I + δ*C
-    dy[2] = α*S*I - β*I
-    dy[3] = β*I - γ*C - δ*C
-	dy[4] = γ*C
-end
-
-# ╔═╡ 8572a08b-299e-44d8-8a2f-2b3a38e7872f
+# ╔═╡ 9a6ad694-cacc-440b-86d2-e5e2b40b88b5
 md"""
 In this final segment, we devise a system of differential equations and use the solution to fit our data. We use the data collected starting from january the 1st, 2022. 
 """
 
-# ╔═╡ 2b2e7a6d-3fc0-4b8e-9dc1-d05c0ad58ab9
+# ╔═╡ 15430101-7efb-4849-8fcb-67f33550f244
 begin
 	data2 = totalData[597:878,:];
 	time2 = data2[:,1];
@@ -1166,33 +1137,7 @@ begin
 	data2
 end
 
-# ╔═╡ 28f39121-551e-4ecb-b857-444b84b9556a
-begin
-	function F4(a, b, c, d, t)
-		
-		# Polynomial of degree 3
-		
-	    return a + b*t + c*t^2 + d*t^3
-	end
-	optimize(F4, [448, 0.1, -0.02, 7], beds2)
-end
-
-# ╔═╡ a9429257-79e8-404b-93ce-db53ca5d483b
-function residueSIR(params)
-
-	α, β, γ, δ, N = params
-
-	y0 = [N-222, 222, 0, 0]
-	tspan = (time2[1], time2[length(time2)])
-	
-    ODESIR = ODEProblem(modSIR, y0, tspan, (α, β, γ, δ))
-    solSIR = solve(ODESIR)
-
-    sol_I = solSIR(time2)[2,:]
-    return norm(sol_I - beds2)
-end
-
-# ╔═╡ 50cab6d4-3e97-4c70-bff7-796eaeb1335c
+# ╔═╡ f868a194-0805-4484-8609-70f505c1f2de
 scatter(time2, beds2, 
 	ms=3,
 	legend=false,
@@ -1200,25 +1145,74 @@ scatter(time2, beds2,
 	yaxis="Number of UCIs", 
 	title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 
-# ╔═╡ cda9d8b5-1d67-4e72-849f-ae96227770b9
+# ╔═╡ 9b3f1190-4e27-416b-a368-bd4e257e815e
+md"""
+Functions like 2nd degree polynomial are not enough to express the nature of our data, a shown below.
+"""
+
+# ╔═╡ 48e38d8b-14d5-426c-9bf7-983fa5b34b54
 begin
-	function F3(α1, β1, γ1, α2, β2, γ2, t)
-		
-		# Neural network
-		
-	    f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
-		f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
-		return f1 .+ f2
+	function getResidue(f, params)
+	
+		# Norm 2 squared
+		predBeds = f(time2, params)
+	    return( norm(predBeds - beds2) )
 	end
-	optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
+	function fit(f, params0)
+	
+		# Fit function f with initial parameters params0
+		residue(params) = getResidue(f, params)
+		
+		opt = Optim.optimize(residue, params0, NelderMead())
+	    oParams = opt.minimizer
+		println("Parameters:")
+		print(oParams)
+	
+		predBeds = f(time2, oParams)
+
+		# Plot
+	    scatter(time2, beds2, marker=:circle, markersize=4, label="Data")
+	    plot!(time2, predBeds,
+	        	linewidth=5,
+				label="Function",
+				yaxis="Number of UCIs.",
+	            xaxis="Days")
+	end
+
+	function poly_2(t, params)
+		
+		# Polynomial of degree 2
+		a, b, c = params
+		
+	    return a .+ b.*t .+ c.*t.^2
+	end
 end
 
-# ╔═╡ 2636b160-a4db-45d8-be32-7631483d6e57
-optimize(F3, [700, 0.8, -0.07, -580, 9.9, -0.14], totalBeds[597:878])
+# ╔═╡ c26c1773-c559-4cb1-8131-1d27f931fda1
+fit(poly_2, [7, 0.8, -0.07])
 
-# ╔═╡ 2371eb1d-e17a-4e1f-90f8-72d15f56de6f
+# ╔═╡ a523723d-1f04-4c8f-b055-a5bc183e753b
 md"""
-To set the equations, we assumed that the change in the amount of occupied UCIs across time must roughly resemble the change in the number of people infected with COVID-19 during the same period, so we decided to use a basic model for the spread of a disease in a population, a modification of the SIR model [2]. The model works with containers and the flow of samples between them. We consider 4 containers, that represent 4 populations: 
+Fitting with higher degree polynomials is costly and finding meaning in the parameters is not a straigh forward task. Next, we display a fitting done using a small neural network. The curve gets closer to our data, but is still hard to contextualize our parameters.
+"""
+
+# ╔═╡ 3d04e8b0-2991-4022-9916-7bb29accc3c0
+begin
+	function NN(t, params)
+	
+		# Neural network
+		α1, β1, γ1, α2, β2, γ2 = params
+		
+		f1 = α1 ./ ( 1 .+ (ℯ.^(β1.*t .+ γ1)) )
+		f2 = α2 ./ ( 1 .+ (ℯ.^(β2.*t .+ γ2)) )
+		return (f1 .+ f2)
+	end
+	fit(NN, [700, 0.1, -61, -350, 1.5, -900])
+end
+
+# ╔═╡ 6392c8c1-3b8d-4a60-ba03-0440d89dba06
+md"""
+Now we present an approach using differential equations. To set the equations, we assumed that the change in the amount of occupied UCIs across time must roughly resemble the change in the number of people infected with COVID-19 during the same period, so we decided to use a basic model for the spread of a disease in a population, a modification of the SIR model [2]. The model works with containers and the flow of samples between them. We consider 4 containers, that represent 4 populations: 
 
 - S: the number of susceptible individuals.
 - I: the number of infected individuals.
@@ -1243,10 +1237,47 @@ $\begin{cases}
 The following code defines the equation system. 
 """
 
-# ╔═╡ 1f91aa8c-4bce-43d9-8a64-f52dd727b159
+# ╔═╡ b445a05b-cbcf-4267-9c6a-7f77eb622114
+function modSIR(dy, y, params, t)
+	
+	# modified SIR equation system
+    S, I, C, R = y
+    α, β, γ, δ = params
+	
+    dy[1] = -α*S*I + δ*C
+    dy[2] = α*S*I - β*I
+    dy[3] = β*I - γ*C - δ*C
+	dy[4] = γ*C
+end
+
+# ╔═╡ 3cf68784-fc86-4cde-97b6-71ad83046703
+md"""
+Now, we define a residue function. Aside from the parameters $\alpha$, $\beta$, $\gamma$ and $\delta$, we include the parameter $N$, which describes the size of the population: $N=S+I+C+R$. All the parameters should be a real number between $0$ and $1$, and $\gamma + \delta$ must be at most $1$, since both are a fraction of $C$ under the same instant of time.
+"""
+
+# ╔═╡ 62232804-851e-4db3-88e4-e4e52331402c
+function residueSIR(params)
+
+	α, β, γ, δ, N = params
+
+	y0 = [N-222, 222, 0, 0]
+	tspan = (time2[1], time2[length(time2)])
+	
+    ODESIR = ODEProblem(modSIR, y0, tspan, (α, β, γ, δ))
+    solSIR = solve(ODESIR)
+
+    sol_I = solSIR(time2)[2,:]
+    return norm(sol_I - beds2)
+end
+
+# ╔═╡ 3568baf7-2499-4a22-9d69-5d3290506f2f
+md"""
+Finally, we let Julia take care of the optimization
+"""
+
+# ╔═╡ 2999a100-395b-400f-88a7-608385266914
 function fitSIR()
 
-	
     opt = Optim.optimize(residueSIR, [1/505, 1/105, 1/108, 1/20, 1400], NelderMead())
     oα, oβ, oγ, oδ, oN = opt.minimizer
 
@@ -1256,6 +1287,8 @@ function fitSIR()
 	# Solve DE with optimal parameters
     oODESIR = ODEProblem(modSIR, y0, tspan, (oα, oβ, oγ, oδ))
     oSolSIR = solve(oODESIR)
+	println("Parameters:")
+	print(opt.minimizer)
 
 	# Plot
 	scatter(time2, beds2, marker=:circle, ms=3, label="Data")
@@ -1267,8 +1300,20 @@ function fitSIR()
 			title=LaTeXString("Occupied ICUs per day.\n \$_{From}\$ \$_{1/01/2022}\$ \$_{to}\$ \$_{6/11/2024}\$"))
 end
 
-# ╔═╡ cbce2506-0a3c-4c94-ad84-79831c85869a
+# ╔═╡ 8963c871-18e3-4ad6-8e02-13008ab95f7c
 fitSIR()
+
+# ╔═╡ 2a41b82f-e838-4921-b908-795772abf0b6
+md"""From these resulting parameters, we could entertain the idea that for a simple viral infection, whose infected victim population looks like that of our data, the total population would be around $4100$ individuals.
+"""
+
+# ╔═╡ 17150073-34f5-4975-b133-d9daf50ec820
+md"""
+## Bibliography
+[1] Secretaría Distrital de Salud. (s.f.). Ocupación de camas UCI COVID-19 - Bogotá D.C. Datos Abiertos Bogotá. Retrieved November 16, 2024, from https://datosabiertos.bogota.gov.co/en/dataset/ocupacion-de-camas-uci-covid-19-bogota-d-c
+
+[2] Wikimedia Foundation. (2024, November 6). Compartmental models in epidemiology. Wikipedia. https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
