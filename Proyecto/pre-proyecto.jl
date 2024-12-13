@@ -24,9 +24,17 @@ md"""
 ## Objetivo
 Nuestro objetivo es replicar el comportamiento descrito en el artículo The Structure and Function of Fish Schools, particularmente los fenómenos de $\textit{flash expansion}$ y $\textit{fountain effect/herd}$ [1], [2], empleando ecuaciones diferenciales.
 
-![Animal Behaviour](https://royalsocietypublishing.org/cms/asset/63f778fc-c7e7-4c69-99f4-22cace85fcdf/rsos211898f01.jpg?download=-/format/auto/-/preview/3000x3000/-/quality/lighter/)
+![Animal Behaviour](https://royalsocietypublishing.org/cms/asset/63f778fc-c7e7-4c69-99f4-22cace85fcdf/rsos211898f01.jpg?-/format/auto/-/preview/3000x3000/-/quality/lighter/)
 
-$\scriptsize{\texttt{[1]}}$
+$\scriptsize{\texttt{Pingeon Flocks [1]}}$
+
+![Animal Behaviour](https://i.postimg.cc/sDyqxXT5/Flash-Expansion.png-/format/auto/-/preview/3000x3000/-/quality/lighter/)
+
+$\scriptsize{\texttt{Flash Espansion [2]}}$
+
+![Animal Behaviour](https://i.postimg.cc/JzzF3FVn/Split.png-/format/auto/-/preview/3000x3000/-/quality/lighter/)
+
+$\scriptsize{\texttt{Fountain Effect [2]}}$
 """
 
 # ╔═╡ 91d638e4-5e87-4180-b04c-38681e609198
@@ -39,22 +47,20 @@ Consideraremos inicialmente una trayectoria de nado de un depredador en un subco
 # ╔═╡ 1ace81ce-0897-4edf-805e-b36cb238866a
 md"""
 ## Resultados esperados
-Se espera visualizar el comportamiento $\textit{flash expansion}$ y $\textit{fountain effect}$ [2]. Con ayuda de los datos que se obtienen de las simulaciones ... 
+Se espera visualizar el comportamiento y el movimiento $\textit{flash expansion}$ y $\textit{fountain effect}$ [2]. Con ayuda de los datos que se obtienen de las simulaciones relacionaremos los parámetros de nuestras ecuaciones, esto nos dará información del comportamiento.
 """
 
 # ╔═╡ d4ce8449-5da5-4512-bced-1a8e952790d4
 md"""
 ## Referencias iniciales
 
-[1] Papadopoulou M,Hildenbrandt H, Sankey DWE, Portugal SJ,Hemelrijk CK. 2022 Emergence of splits andcollective turns in pigeon flocks under predation.R. Soc. Open Sci. 9: 211898.https://doi.org/10.1098/rsos.211898
+[1] Papadopoulou M,Hildenbrandt H, Sankey DWE, Portugal SJ,Hemelrijk CK. 2022 Emergence of splits andcollective turns in pigeon flocks under predation.R. Soc. Open Sci. 9: 211898. https://doi.org/10.1098/rsos.211898
 
 [2] Partridge, B. L. (1982). The structure and function of fish schools. Scientific American, 246(6), 114–123. (https://sci-hub.se/10.1038/scientificamerican0682-114)
 
 [3] Reynolds, C. W. (1987). Flocks, herds, and schools: A distributed behavioral model. Computer Graphics, 21(4), 25–34. (https://team.inria.fr/imagine/files/2014/10/flocks-hers-and-schools.pdf)
 
 [4] Romey, W. L., Smith, A. L., & Buhl, J. (2015). Flash expansion and the repulsive herd. Animal Behaviour, 110, 171–178. (https://sci-hub.se/10.1016/j.anbehav.2015.09.017)
-
-[5] Sims, K. (1984). Locomotion of jointed figures over complex terrain (Bachelor's thesis). Massachusetts Institute of Technology, Cambridge, MA. (17246083-MIT.pdf)
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -354,6 +360,6 @@ version = "17.4.0+2"
 # ╟─a659978a-ffd7-4b59-a256-36f97f5c6cf9
 # ╟─91d638e4-5e87-4180-b04c-38681e609198
 # ╟─1ace81ce-0897-4edf-805e-b36cb238866a
-# ╠═d4ce8449-5da5-4512-bced-1a8e952790d4
+# ╟─d4ce8449-5da5-4512-bced-1a8e952790d4
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
