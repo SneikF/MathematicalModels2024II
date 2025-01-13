@@ -42,7 +42,7 @@ Para añadir un estimulo que altere la fase del destello, considere un estimulo 
 # ╔═╡ 1ace81ce-0897-4edf-805e-b36cb238866a
 md"""
 ## Resultados esperados
-Se espera visualizar el comportamiento y el movimiento $\textit{flash expansion}$ y $\textit{fountain effect}$ [2]. Con ayuda de los datos que se obtienen de las simulaciones relacionaremos los parámetros de nuestras ecuaciones, esto nos dará información del comportamiento.
+
 """
 
 # ╔═╡ d4ce8449-5da5-4512-bced-1a8e952790d4
