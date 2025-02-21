@@ -8,7 +8,7 @@ using InteractiveUtils
 md"""
 # Análisis de Solvers de EDO en Diferentes Herramientas
 - Esneider Fabian Sierra Alba
-- Juan Jose Martinez Castiblanco
+- Juan José Martínez Castiblanco
 - Juan Carlos Sánchez Orjuela
 """
 
