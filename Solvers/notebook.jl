@@ -197,6 +197,45 @@ print(sol.y)
 Nótese que la solución exacta es $y(t)=2e^{-0.5t}$.
 """
 
+# ╔═╡ c041d5b6-c998-4aab-92b5-1ea56843c542
+md"""
+Podemos considerar el ejemplo que usamos con solve_ivp: 
+$\frac{dy}{dt} = -2y,\quad y(0)=2$.
+Usando ode23 se obtiene:
+
+```mathlab
+>> %Solución numérica usando ode23s
+tspan = 0:0.1:5;
+opts = odeset('Stats','on');
+y0 = 2;
+[t,y] = ode23s(@(t,y) -0.5*y, tspan, y0);
+ 
+%Solución numérica usando solve_ivp
+a = [0.         0.11488132 1.26369452 3.06074656 4.81637262 5.        ];
+b = [2.         1.88835583 1.0632438  0.43316531 0.18014905 0.16434549];
+
+%Solución analítica
+x = 0:0.1:5;
+z = 2*exp(-0.5*x);
+
+%Gráficas
+tiledlayout(3,1)
+nexttile
+plot(t,y)
+title('Matlab: ode23s')
+nexttile
+plot(a,b)
+title('Python SciPy: solve-ivp')
+nexttile
+plot(t,y)
+title('Solución Analítica')
+```
+Podemos visualizar las gráficas de cada uno de los solvers y compararlas con la solución analítica
+![Gráficas](https://i.postimg.cc/NFLBydqQ/Captura.png)
+$\scriptsize{\texttt{Figure 1. Matlab: ode23s VS Python SciPy: solve-ivp VS Solución Analítica.}}$
+"""
+
+
 # ╔═╡ Cell order:
 # ╟─931f7d35-deff-4ac6-a0c7-927673c252fd
 # ╟─8a6beff8-5b76-4918-bb4a-5e891713d4c6
