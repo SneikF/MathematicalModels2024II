@@ -176,7 +176,7 @@ ys.append(y)
 Una vez terminada la ejecución de RK, se crea el objeto solución, que contiene principalmente un arreglo con los tiempos de ejecución del algoritmo y un arreglo con la función $y(t)$ evaluada en cada punto.
 
 Un ejemplo sencillo es la ecuación de decaimiento exponencial 
-$\frac{dy}{dt} = -2y,\quad y(0)=2$,
+$\frac{dy}{dt} = -0.5y,\quad y(0)=2$,
 Usando la librería se obtiene:
 ```python
 import numpy as np
@@ -200,7 +200,7 @@ Nótese que la solución exacta es $y(t)=2e^{-0.5t}$.
 # ╔═╡ c041d5b6-c998-4aab-92b5-1ea56843c542
 md"""
 Podemos considerar el ejemplo que usamos con solve_ivp: 
-$\frac{dy}{dt} = -2y,\quad y(0)=2$.
+$\frac{dy}{dt} = -0.5y,\quad y(0)=2$.
 Usando ode23 se obtiene:
 
 ```mathlab
