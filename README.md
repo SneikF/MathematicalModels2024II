@@ -12,7 +12,7 @@ La siguiente es una visualización de la solución numérica del modelo de Kuram
 
 ## 🪲 Simulación interactiva
 
-Explora el comportamiento de las luciérnagas con esta simulación interactiva:  
+En el siguiente enlace puede explorar el comportamiento de las luciérnagas con una simulación interactiva:  
 <a href="https://thecomputercat.github.io/fireflies/" target="_blank" rel="noopener noreferrer">
     🔗 <b>Ver simulación interactiva</b>
 </a>
