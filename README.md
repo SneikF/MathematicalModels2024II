@@ -1,12 +1,8 @@
 # Mathematical Models 2024-II
 
-https://mybinder.org/v2/gh/SneikF/MathematicalModels2024II.git/HEAD
+# 🔥 Osciladores acoplados y sincronización 
 
-## How to run with Docker!
-Just run:
+Bienvenido a este proyecto
 
-```bash
-$ make pluto-run
-```
-
-and select or load the file you want to run.
+## 📂 Archivos importantes  
+- `Proyecto/numeric.jl` → **Ruta del archivo principal** 📌  
