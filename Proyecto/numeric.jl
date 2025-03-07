@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
@@ -22,7 +22,7 @@ end
 # ╔═╡ 091c5dab-ee7c-4ab3-800f-0df99a7f8b45
 @bind params PlutoUI.combine() do Child
 	md"""
-	## Number of oscilators
+	## Número de osciladores
 	N:
 	$(Child(Slider(2:30, default=2)))
 
@@ -40,7 +40,7 @@ end
 
 # ╔═╡ 1c42b970-0d1f-4bf6-bb7c-c99c2b46e63f
 begin
-	html = "<span style='font-size:40px;'> Number of oscilators: $(params[1])  </span>"
+	html = "<span style='font-size:40px;'> Número de osciladores: $(params[1])  </span>"
 	if params[2]
 		html *= "<br><span style='font-size:40px;'> K: $(params[3])  </span>"
 	end
@@ -69,8 +69,6 @@ function setKuramoto(ω, N, sharedK=true)
 	return kuramoto!
 end
 
-
-
 # ╔═╡ b81f3c5b-0aa5-4efd-8989-4725e73cbd66
 function solveKuramoto(N, ω, θ_0, k, span, sharedK, name)
 	kuramoto! = setKuramoto(ω, N, sharedK)
@@ -83,17 +81,23 @@ function solveKuramoto(N, ω, θ_0, k, span, sharedK, name)
 		xs, ys = cos.(sol[i]), sin.(sol[i])
 		mxs, mys = mean(xs), mean(ys)
 		
-		scatter(xs, ys , markersize=9, legend=false, xlim=(-1.1, 1.1), ylim=(-1.1, 1.1), title="Kuramoto Model", size=(600, 600),grid=false, framestyle=:none, seriescolor=colors)
+		θ = range(0, 2π, length=500)  
+		x = cos.(θ) 
+		y = sin.(θ)
+
+		
+		scatter(xs, ys , markersize=9, legend=false, xlim=(-1.1, 1.1), ylim=(-1.1, 1.1), title="Kuramoto Model", size=(600, 600), grid=false, framestyle=:none, seriescolor=colors)
+
+		scatter!(x, y, markersize=2, aspect_ratio=:equal)
 		
 		vline!([0], color=:black, linestyle=:dash, label="") 
 		hline!([0], color=:black, linestyle=:dash, label="")
 		
 		plot!([0, mxs], [0, mys], linewidth=2, color=:red)
 		scatter!([mxs], [mys] , markersize=9, color=:black)
-
 	end
-	
-	output_folder = "/home/pluto/notebooks/Proyecto/videos/"  
+
+	output_folder = "C:\\Users\\RulFo\\AppData\\Local\\Temp\\jl_Qd6qjl"  #si obtiene un error use el path que le genera Julia para guardar el archivo .mp4
 	output_path = joinpath(output_folder, name)
 	mp4(anim, output_path, fps=30)
 	video_data = base64encode(read(output_path))
@@ -149,7 +153,7 @@ Statistics = "~1.11.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.3"
+julia_version = "1.11.1"
 manifest_format = "2.0"
 project_hash = "bd8b94644a088a1fbda0932ca4f841a048e4152b"
 
