@@ -1,6 +1,6 @@
 # Mathematical Models 2024-II
 
-# 🔥 Osciladores acoplados y sincronización 
+# ✨ Osciladores acoplados y sincronización 
 
 Bienvenido a este proyecto
 
