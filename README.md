@@ -13,7 +13,7 @@ La siguiente es una visualización de la solución numérica del modelo de Kuram
 ## 🪲 Simulación interactiva
 
 Explora el comportamiento de las luciérnagas con esta simulación interactiva:  
-🔗 [Ver simulación](https://thecomputercat.github.io/fireflies/)
+[![🔗 Ver Simulación](https://img.shields.io/badge/Ver%20Simulación-%F0%9F%9A%80-blue)](https://thecomputercat.github.io/fireflies/)
 
 ## 📂 Archivos importantes  
 En la siguiente ruta puede encontrar el código en Julia para las soluciones numéricas del modelo de Kuramoto
